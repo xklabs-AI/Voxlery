@@ -267,6 +267,23 @@ Settings can be customized in [`backend/config.py`](backend/config.py):
 
 ---
 
+## 🗑️ Clean Uninstallation
+
+Voxlery provides safe, automated uninstallation scripts for Windows, macOS, and Linux. They clean up local virtual environments, build artifacts, and database indexes while never touching your original photo files. The script will also ask if you want to remove the downloaded Ollama models (`moondream`, `gemma4:e2b`):
+
+- **Windows**:
+  ```powershell
+  .\uninstall.bat
+  # or in PowerShell: .\uninstall.ps1
+  ```
+- **macOS / Linux**:
+  ```bash
+  chmod +x uninstall.sh
+  ./uninstall.sh
+  ```
+
+---
+
 ## 🗺️ Roadmap
 
 - [ ] 💬 **Chat with a Photo** — Ask questions about any photo in your library and get natural, conversational answers
