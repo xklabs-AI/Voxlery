@@ -1,11 +1,11 @@
 @echo off
 setlocal enabledelayedexpansion
-title PixelMemory Automated Setup
+title Voxlery Automated Setup
 
 cd /d "%~dp0"
 
 echo =====================================================================
-echo   PixelMemory Platform Setup (Windows)
+echo   Voxlery Platform Setup (Windows)
 echo   Local Semantic Photo Search - Privacy Preserving - Zero Cloud
 echo =====================================================================
 echo.
@@ -165,10 +165,10 @@ if %ERRORLEVEL% equ 0 (
 
 echo.
 echo =====================================================================
-echo   [OK] PixelMemory Setup Complete!
+echo   [OK] Voxlery Setup Complete!
 echo =====================================================================
 echo.
-echo Launch PixelMemory anytime:
+echo Launch Voxlery anytime:
 echo.
 echo   - Native Desktop App:   .\launch.bat --desktop
 echo   - Web Browser Mode:     .\launch.bat

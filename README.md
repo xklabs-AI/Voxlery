@@ -1,4 +1,4 @@
-# PixelMemory — Local Semantic Photo Search
+# Voxlery — Local Semantic Photo Search
 
 > **Your closest moments deserve better than a forgotten folder. Rediscover and relive your entire photo library with natural language search, face recognition & story timelines — powered by local Vision AI. No cloud, no telemetry, no compromise.**
 
@@ -14,7 +14,7 @@
 ## ✨ Core Features & Capabilities
 
 - 🔒 **100% Private & Strictly Offline** — Zero cloud dependencies, zero external telemetry. All neural inference, facial detection, vector embeddings, and reverse geocoding run entirely on your local machine.
-- 🖥️ **Native Desktop Application (Tauri v2)** — High-performance native desktop shell (`PixelMemory.exe` / macOS App) featuring a frameless glass header, custom window controls, and native File Explorer/Finder directory pickers.
+- 🖥️ **Native Desktop Application (Tauri v2)** — High-performance native desktop shell (`Voxlery.exe` / macOS App) featuring a frameless glass header, custom window controls, and native File Explorer/Finder directory pickers.
 - 🧠 **Deep Visual Understanding (Moondream2)** — Pre-configured to use **Moondream2** (`moondream`) via Ollama for ultra-fast GPU visual description (~0.8s/photo) capturing scene categories, objects, actions, clothing, colors, and mood.
 - 🗣️ **Smart Natural Language Query Understanding** — Intelligent query intent parser automatically decomposes queries like *"photos in Tokyo last summer with Alice"* into semantic visual vectors, location filters, date/time ranges, and recognized people.
 - 🗺️ **Interactive Geographic Map View** — Visualizes your photos on an interactive dark-mode world map with geographic clustering based on EXIF GPS metadata.
@@ -29,7 +29,7 @@
 
 ## 🤖 Pre-Configured Default AI Models & Tech Stack
 
-PixelMemory is out-of-the-box optimized for consumer GPUs, Apple Silicon, and modern CPUs:
+Voxlery is out-of-the-box optimized for consumer GPUs, Apple Silicon, and modern CPUs:
 
 | Capability | Model / Engine | Speed / Resource | Purpose |
 | :--- | :--- | :--- | :--- |
@@ -46,7 +46,7 @@ PixelMemory is out-of-the-box optimized for consumer GPUs, Apple Silicon, and mo
 
 ## 🦙 Ollama Setup Guide (End-to-End)
 
-PixelMemory uses [Ollama](https://ollama.com/) for local GPU acceleration of Moondream2 and Gemma 4. Follow the setup steps below for your operating system:
+Voxlery uses [Ollama](https://ollama.com/) for local GPU acceleration of Moondream2 and Gemma 4. Follow the setup steps below for your operating system:
 
 ### 🪟 Windows Setup
 
@@ -125,12 +125,12 @@ You should see `moondream:latest` and `gemma4:e2b` listed.
 
 ### 🪟 Windows Quick Start
 
-PixelMemory provides automated setup scripts that configure the Python virtual environment and check your tools:
+Voxlery provides automated setup scripts that configure the Python virtual environment and check your tools:
 
 1. **Clone the repository**:
    ```powershell
-   git clone https://github.com/xklabs-AI/PixelMemory.git
-   cd PixelMemory
+   git clone https://github.com/xklabs-AI/Voxlery.git
+   cd Voxlery
    ```
 
 2. **Run the automated setup**:
@@ -148,8 +148,8 @@ PixelMemory provides automated setup scripts that configure the Python virtual e
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/xklabs-AI/PixelMemory.git
-   cd PixelMemory
+   git clone https://github.com/xklabs-AI/Voxlery.git
+   cd Voxlery
    ```
 
 2. **Run the automated setup**:
@@ -160,9 +160,9 @@ PixelMemory provides automated setup scripts that configure the Python virtual e
 
 ---
 
-## 🚀 Running PixelMemory
+## 🚀 Running Voxlery
 
-PixelMemory can run either as a **Native Desktop Application** or as a **Local Web Platform**.
+Voxlery can run either as a **Native Desktop Application** or as a **Local Web Platform**.
 
 ### Option 1: Native Desktop Application (Tauri v2)
 
@@ -189,7 +189,7 @@ The desktop mode provides native OS window dragging, glass styling, and native f
 > ```bash
 > npm install
 > ```
-> If Rust is not present, PixelMemory will inform you and gracefully offer to run in Web Browser Mode.
+> If Rust is not present, Voxlery will inform you and gracefully offer to run in Web Browser Mode.
 
 > [!WARNING]
 > **macOS 27+ SDK Compatibility**: The macOS 27.0 SDK introduces new architecture identifiers (`arm64e.x1`) that the current stable Rust toolchain does not yet recognize. If the desktop build fails with linker errors referencing `unknown architecture`, use **Web Browser Mode** (`./launch.sh`) as a fully functional alternative until Rust ships an updated toolchain.
@@ -215,7 +215,7 @@ Default URL: 👉 **`http://localhost:8642`**
 
 ### Option 3: Quick Demo Archive (12 Sample Photos)
 
-Want to try PixelMemory instantly without waiting for your photo library to index?
+Want to try Voxlery instantly without waiting for your photo library to index?
 - **Windows**:
   ```powershell
   .\launch.bat --demo
@@ -245,7 +245,7 @@ python launch.py --doctor
 ## 📥 Ingesting Your Photo Library
 
 You can import photos directly through the UI:
-1. Open PixelMemory (Desktop App or Browser).
+1. Open Voxlery (Desktop App or Browser).
 2. Click **📁 Ingest Photos** or click **Browse Folder...** (which opens your native OS folder chooser).
 3. Select your photo directory (e.g., `D:\Photos` or `/Users/name/Pictures`).
 4. Click **Start Ingestion**. The floating progress dock will monitor progress in the background while you continue searching!
@@ -261,7 +261,7 @@ Settings can be customized in [`backend/config.py`](backend/config.py):
 | `DEFAULT_VLM_MODEL` | `"moondream"` | Primary Vision model for image captioning |
 | `STORY_LLM_MODEL` | `"gemma4:e2b"` | Primary LLM for travel story generation |
 | `OLLAMA_HOST` | `"http://localhost:11434"` | Local Ollama API server endpoint |
-| `DATA_DIR` | `~/.pixelmemory` | Library database, thumbnails, and Zvec vector store (auto-created on first run; grows with library size) |
+| `DATA_DIR` | `~/.voxlery` | Library database, thumbnails, and Zvec vector store (auto-created on first run; grows with library size) |
 | `PORT` | `8642` | Local backend port |
 | `HOST` | `"0.0.0.0"` | Network bind address |
 
@@ -287,4 +287,4 @@ Settings can be customized in [`backend/config.py`](backend/config.py):
 
 ## 📄 License
 
-PixelMemory is open-source software licensed under the [Apache 2.0 License](LICENSE).
+Voxlery is open-source software licensed under the [Apache 2.0 License](LICENSE).

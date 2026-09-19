@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "PixelMemory",
+  "productName": "Voxlery",
   "version": "1.0.0",
-  "identifier": "com.pixelmemory.app",
+  "identifier": "com.voxlery.app",
   "build": {
     "frontendDist": "../frontend",
     "devUrl": "http://127.0.0.1:8642"
@@ -11,7 +11,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "PixelMemory AI — Local Semantic Photo Search",
+        "title": "Voxlery AI — Local Semantic Photo Search",
         "width": 1380,
         "height": 880,
         "minWidth": 1024,

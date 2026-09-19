@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    PixelMemory Platform Launcher for PowerShell
+    Voxlery Platform Launcher for PowerShell
 #>
 
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path

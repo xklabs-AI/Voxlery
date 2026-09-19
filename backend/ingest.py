@@ -515,7 +515,7 @@ def start_background_import(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="PixelMemory ingest pipeline")
+    parser = argparse.ArgumentParser(description="Voxlery ingest pipeline")
     parser.add_argument("directory", help="Root directory to scan for images")
     parser.add_argument("--rescan", action="store_true", help="Re-scan even if images exist in DB")
     parser.add_argument("--skip-describe", action="store_true", help="Skip VLM description (metadata only)")

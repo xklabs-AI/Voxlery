@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# PixelMemory — Automated Setup Script (macOS & Linux)
+# Voxlery — Automated Setup Script (macOS & Linux)
 # ==============================================================================
 set -e
 
@@ -8,7 +8,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 echo "====================================================================="
-echo "  PixelMemory Platform Setup (macOS / Linux)"
+echo "  Voxlery Platform Setup (macOS / Linux)"
 echo "  Local Semantic Photo Search · Privacy Preserving · Zero Cloud"
 echo "====================================================================="
 echo ""
@@ -120,10 +120,10 @@ fi
 
 echo ""
 echo "====================================================================="
-echo "  [OK] PixelMemory Setup Complete!"
+echo "  [OK] Voxlery Setup Complete!"
 echo "====================================================================="
 echo ""
-echo "You can now launch PixelMemory anytime:"
+echo "You can now launch Voxlery anytime:"
 echo ""
 echo "  • Launch Native Desktop App:   ./launch.sh --desktop"
 echo "  • Launch Web Browser Mode:     ./launch.sh"

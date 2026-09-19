@@ -142,7 +142,7 @@ class UpdateNoteRequest(BaseModel):
 
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="PixelMemory", version="1.0.0")
+app = FastAPI(title="Voxlery", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -192,6 +192,8 @@ def extract_tags(enriched: str, place: str, camera: str, date_taken: str) -> lis
     if not tags:
         tags = ["#Photo"]
     return tags[:4]
+
+
 
 
 # ── API routes ───────────────────────────────────────────
@@ -2727,13 +2729,13 @@ def save_collage(req: CollageSaveRequest):
             image_id = upsert_image(conn, str(file_path.resolve()), file_hash, file_size)
             meta = {
                 "date_taken": now_iso,
-                "camera_make": "PixelMemory",
+                "camera_make": "Voxlery",
                 "camera_model": f"Collage Studio ({req.layout} · {req.aspect_ratio})",
                 "orientation": 1,
             }
             update_metadata(conn, image_id, **meta)
 
-            desc = f"Custom photo collage created in PixelMemory Collage Studio. Layout: {req.layout}, aspect ratio: {req.aspect_ratio}."
+            desc = f"Custom photo collage created in Voxlery Collage Studio. Layout: {req.layout}, aspect ratio: {req.aspect_ratio}."
             if req.title:
                 desc = f"Photo collage titled '{req.title}'. {desc}"
             conn.execute(
@@ -2774,7 +2776,7 @@ def serve_frontend():
     index = FRONTEND_DIR / "index.html"
     if index.exists():
         return FileResponse(index, media_type="text/html")
-    return HTMLResponse("<h1>PixelMemory</h1><p>Frontend not found. Place index.html in /frontend/</p>")
+    return HTMLResponse("<h1>Voxlery</h1><p>Frontend not found. Place index.html in /frontend/</p>")
 
 
 # Mount static assets if they exist
@@ -2787,7 +2789,7 @@ if FRONTEND_DIR.exists():
 def main():
     import uvicorn
     init_db()
-    print(f"\nPixelMemory server starting at http://localhost:{PORT}")
+    print(f"\nVoxlery server starting at http://localhost:{PORT}")
     print(f"Search {get_search().count} embedded images\n")
     uvicorn.run(app, host=HOST, port=PORT)
 

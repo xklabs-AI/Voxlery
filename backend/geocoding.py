@@ -19,7 +19,7 @@ from pathlib import Path
 from backend.config import DATA_DIR
 from backend.places import US_STATES, SUPPLEMENTARY_PLACES
 
-logger = logging.getLogger("pixelmemory.geocoding")
+logger = logging.getLogger("voxlery.geocoding")
 
 # Dedicated location cache database
 CACHE_DB_PATH = DATA_DIR / "location_cache.db"
@@ -112,7 +112,7 @@ def search_osm_photon(query: str, limit: int = 15) -> list[dict]:
     """Search live OpenStreetMap via Photon autocomplete API."""
     q_encoded = urllib.parse.quote(query.strip())
     url = f"https://photon.komoot.io/api/?q={q_encoded}&limit={limit}"
-    req = urllib.request.Request(url, headers={"User-Agent": "PixelMemory-PhotoSearch/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Voxlery-PhotoSearch/1.0"})
 
     with urllib.request.urlopen(req, timeout=2.5) as resp:
         data = json.loads(resp.read().decode("utf-8"))

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PixelMemory Platform Launcher
+Voxlery Platform Launcher
 Unified launcher for starting the search server, exploring demo data, ingesting photos,
 and checking system diagnostics.
 """
@@ -72,11 +72,14 @@ C_PURPLE = "\033[38;5;141m"
 
 def banner():
     print(rf"""
-{C_PURPLE}{C_BOLD}  ___ _         _ __  __                           
- | _ (_)_ _____| |  \/  |___ _ __  ___ _ _ _  _    
- |  _/ \ \ / -_) | |\/| / -_) '  \/ _ \ '_| || |   
- |_| |_/_\_\___|_|_|  |_\___|_|_|_\___/_|  \_, |   
-                                           |__/    {C_RESET}
+{C_PURPLE}{C_BOLD}  __      __            _                  
+  \ \    / /           | |                 
+   \ \  / /___ __  __  | | ___ _ __ _   _  
+    \ \/ // _ \\ \/ /  | |/ _ \ '__| | | | 
+     \  /| (_) |>  <   | |  __/ |  | |_| | 
+      \/  \___//_/\_\  |_|\___|_|   \__, | 
+                                     __/ | 
+                                    |___/  {C_RESET}
   {C_DIM}Local Semantic Photo Search · Privacy Preserving · Zero Cloud Dependencies{C_RESET}
 """)
 
@@ -169,7 +172,7 @@ def print_system_status():
 
 
 def start_server(port: int = PORT, host: str = HOST, auto_open: bool = True):
-    print(f"\n{C_PURPLE}{C_BOLD}Starting PixelMemory Platform...{C_RESET}")
+    print(f"\n{C_PURPLE}{C_BOLD}Starting Voxlery Platform...{C_RESET}")
     init_db()
 
     target_url = f"http://localhost:{port}"
@@ -209,7 +212,7 @@ def start_server(port: int = PORT, host: str = HOST, auto_open: bool = True):
     try:
         uvicorn.run(app, host=host, port=port, log_level="info")
     except KeyboardInterrupt:
-        print(f"\n{C_YELLOW}PixelMemory server stopped.{C_RESET}")
+        print(f"\n{C_YELLOW}Voxlery server stopped.{C_RESET}")
 
 
 def seed_demo(auto_open: bool = True, port: int = PORT):
@@ -283,8 +286,8 @@ def check_desktop_prerequisites() -> bool:
         except Exception:
             pass
 
-    release_exe = WORKSPACE_ROOT / "src-tauri" / "target" / "release" / "PixelMemory.exe"
-    debug_exe = WORKSPACE_ROOT / "src-tauri" / "target" / "debug" / "PixelMemory.exe"
+    release_exe = WORKSPACE_ROOT / "src-tauri" / "target" / "release" / "Voxlery.exe"
+    debug_exe = WORKSPACE_ROOT / "src-tauri" / "target" / "debug" / "Voxlery.exe"
     if not has_msvc and not release_exe.exists() and not debug_exe.exists():
         print(f"\n{C_YELLOW}⚠ Microsoft C++ Build Tools (MSVC link.exe) not detected.{C_RESET}")
         print(f"  Tauri requires C++ Build Tools to compile native desktop binaries.")
@@ -308,13 +311,13 @@ def check_desktop_prerequisites() -> bool:
 
 def start_desktop_app(port: int = PORT, host: str = "127.0.0.1"):
     """
-    Launch PixelMemory Native Desktop Application (Tauri).
+    Launch Voxlery Native Desktop Application (Tauri).
     Ensures backend server is active, waits for health check, and launches Tauri.
     """
     if not check_desktop_prerequisites():
         return
 
-    print(f"\n{C_PURPLE}{C_BOLD}Starting PixelMemory Desktop App (Tauri)...{C_RESET}")
+    print(f"\n{C_PURPLE}{C_BOLD}Starting Voxlery Desktop App (Tauri)...{C_RESET}")
     init_db()
 
     target_url = f"http://127.0.0.1:{port}"
@@ -367,8 +370,10 @@ def start_desktop_app(port: int = PORT, host: str = "127.0.0.1"):
 
     # Check for compiled Tauri executable or run dev via npm
     candidates = [
+        WORKSPACE_ROOT / "src-tauri" / "target" / "release" / "Voxlery.exe",
         WORKSPACE_ROOT / "src-tauri" / "target" / "release" / "PixelMemory.exe",
         WORKSPACE_ROOT / "src-tauri" / "target" / "release" / "app.exe",
+        WORKSPACE_ROOT / "src-tauri" / "target" / "debug" / "Voxlery.exe",
         WORKSPACE_ROOT / "src-tauri" / "target" / "debug" / "PixelMemory.exe",
         WORKSPACE_ROOT / "src-tauri" / "target" / "debug" / "app.exe",
     ]
@@ -475,7 +480,7 @@ def interactive_menu():
 
 
 def main():
-    parser = argparse.ArgumentParser(description="PixelMemory Platform Launcher")
+    parser = argparse.ArgumentParser(description="Voxlery Platform Launcher")
     parser.add_argument("--serve", action="store_true", help="Start FastAPI web platform and open browser")
     parser.add_argument("--demo", action="store_true", help="Seed demo photos and launch web platform")
     parser.add_argument("--ingest", metavar="DIR", help="Ingest a photo directory")

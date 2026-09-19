@@ -1,10 +1,26 @@
-"""PixelMemory configuration."""
+"""Voxlery configuration."""
 
 from pathlib import Path
 
 # ── Paths ────────────────────────────────────────────
-DATA_DIR = Path.home() / ".pixelmemory"
-DB_PATH = DATA_DIR / "pixelmemory.db"
+DATA_DIR = Path.home() / ".voxlery"
+# Auto-migrate legacy ~/.pixelmemory directory if ~/.voxlery doesn't exist
+_LEGACY_DATA_DIR = Path.home() / ".pixelmemory"
+if not DATA_DIR.exists() and _LEGACY_DATA_DIR.exists():
+    try:
+        _LEGACY_DATA_DIR.rename(DATA_DIR)
+    except Exception:
+        DATA_DIR = _LEGACY_DATA_DIR
+
+DB_PATH = DATA_DIR / "voxlery.db"
+# Auto-migrate legacy pixelmemory.db if voxlery.db doesn't exist
+_LEGACY_DB_PATH = DATA_DIR / "pixelmemory.db"
+if not DB_PATH.exists() and _LEGACY_DB_PATH.exists():
+    try:
+        _LEGACY_DB_PATH.rename(DB_PATH)
+    except Exception:
+        DB_PATH = _LEGACY_DB_PATH
+
 CHROMA_DIR = DATA_DIR / "chroma"  # kept for migration script
 ZVEC_DIR = DATA_DIR / "zvec"
 ZVEC_DIMENSION = 384              # all-MiniLM-L6-v2 output dimensionality

@@ -30,7 +30,7 @@ NANODET_URL = (
 
 
 def _resolve_model_path(filename: str, min_size: int = 10000) -> Path:
-    """Find model in bundled repo models/ directory or user ~/.pixelmemory/models directory."""
+    """Find model in bundled repo models/ directory or user ~/.voxlery/models directory."""
     bundled = BUNDLED_MODELS_DIR / filename
     if bundled.exists() and bundled.stat().st_size >= min_size:
         return bundled

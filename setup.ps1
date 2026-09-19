@@ -1,13 +1,13 @@
 <#
 .SYNOPSIS
-    PixelMemory Automated Setup Script for Windows PowerShell
+    Voxlery Automated Setup Script for Windows PowerShell
 #>
 
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $ScriptDir
 
 Write-Host "=====================================================================" -ForegroundColor Cyan
-Write-Host "  PixelMemory Platform Setup (Windows PowerShell)" -ForegroundColor Cyan
+Write-Host "  Voxlery Platform Setup (Windows PowerShell)" -ForegroundColor Cyan
 Write-Host "  Local Semantic Photo Search · Privacy Preserving · Zero Cloud" -ForegroundColor Gray
 Write-Host "=====================================================================`n" -ForegroundColor Cyan
 
@@ -95,7 +95,7 @@ if ($HasCargo) {
 Write-Host "`n=====================================================================" -ForegroundColor Green
 Write-Host "  [OK] Setup Complete!" -ForegroundColor Green
 Write-Host "=====================================================================`n" -ForegroundColor Green
-Write-Host "Start PixelMemory:"
+Write-Host "Start Voxlery:"
 Write-Host "  .\launch.bat --desktop    # Native desktop app" -ForegroundColor Cyan
 Write-Host "  .\launch.bat              # Web browser mode" -ForegroundColor Cyan
 Write-Host ""

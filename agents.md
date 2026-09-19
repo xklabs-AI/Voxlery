@@ -1,8 +1,8 @@
-# PixelMemory — Agent Architecture
+# Voxlery — Agent Architecture
 
 ## Overview
 
-PixelMemory is decomposed into specialized agents, each owning a distinct responsibility in the pipeline. Agents communicate through the shared SQLite database (state machine) and the filesystem (thumbnails, originals). Each agent is independently restartable — pipeline state lives in the DB, not in memory.
+Voxlery is decomposed into specialized agents, each owning a distinct responsibility in the pipeline. Agents communicate through the shared SQLite database (state machine) and the filesystem (thumbnails, originals). Each agent is independently restartable — pipeline state lives in the DB, not in memory.
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐

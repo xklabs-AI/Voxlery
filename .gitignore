@@ -1,5 +1,5 @@
 # ==============================================================================
-# PixelMemory — .gitignore
+# Voxlery — .gitignore
 # ==============================================================================
 
 # ── Private User Data & Photos ──────────────────────────────────────────────
@@ -31,6 +31,7 @@ uploads/
 *.db-journal
 *.sqlite
 *.sqlite3
+.voxlery/
 .pixelmemory/
 chroma/
 zvec/

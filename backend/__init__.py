@@ -1,4 +1,4 @@
-"""PixelMemory backend package."""
+"""Voxlery backend package."""
 
 try:
     import pillow_heif

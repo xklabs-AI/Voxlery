@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PixelMemory AI — Local Semantic Photo Search</title>
+  <title>Voxlery AI — Local Semantic Photo Search</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -1519,9 +1519,7 @@
     }
 
     .modal-window {
-      background: rgba(13, 18, 30, 0.88);
-      backdrop-filter: var(--glass-blur);
-      -webkit-backdrop-filter: var(--glass-blur);
+      background: rgba(13, 18, 30, 0.96);
       border: 1px solid var(--border-highlight);
       border-radius: var(--radius-lg);
       max-width: 960px;
@@ -3018,6 +3016,9 @@
       height: 100%;
       pointer-events: none;
       z-index: 10;
+      contain: layout paint;
+      isolation: isolate;
+      transform: translateZ(0);
     }
 
     .face-box {
@@ -3026,35 +3027,31 @@
       border-radius: 6px;
       pointer-events: auto;
       cursor: pointer;
-      transition: opacity 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
       background: rgba(59, 130, 246, 0.08);
       z-index: 11;
-      animation: faceBoxFadeIn 0.15s ease-out;
-      will-change: opacity, border-color;
+      contain: layout paint;
+      transform: translateZ(0);
+      /* Instant response on hover to avoid continuous repaint interpolation in Firefox */
+      transition: none;
     }
 
-    @keyframes faceBoxFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* When any face box or detail tag is hovered, subtly dim other face boxes so the target pops */
+    /* When any face box or detail tag is hovered, dim other face boxes instantly */
     .face-overlay.has-hover .face-box:not(.is-hover-highlight) {
-      opacity: 0.35;
+      opacity: 0.3;
+      transition: none;
     }
 
     .face-box.is-hover-highlight,
     .face-box:hover {
       z-index: 30 !important;
       opacity: 1 !important;
-      border-width: 3px !important;
-    }
-
-    .face-box.is-hover-highlight,
-    .face-box:hover {
-      border-color: #60a5fa;
-      box-shadow: 0 0 20px rgba(96, 165, 250, 0.85), inset 0 0 14px rgba(59, 130, 246, 0.3);
-      background: rgba(59, 130, 246, 0.22);
+      /* Keep border-width 2px to avoid layout reflow in Firefox */
+      border-width: 2px !important;
+      border-color: #60a5fa !important;
+      outline: 2px solid rgba(96, 165, 250, 0.9);
+      outline-offset: -1px;
+      box-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
+      background: rgba(59, 130, 246, 0.25) !important;
     }
 
     .face-box.tagged {
@@ -3064,8 +3061,10 @@
     .face-box.tagged.is-hover-highlight,
     .face-box.tagged:hover {
       border-color: #34d399 !important;
-      box-shadow: 0 0 22px rgba(16, 185, 129, 0.9), inset 0 0 14px rgba(16, 185, 129, 0.35) !important;
-      background: rgba(16, 185, 129, 0.22) !important;
+      outline: 2px solid rgba(52, 211, 153, 0.9);
+      outline-offset: -1px;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6) !important;
+      background: rgba(16, 185, 129, 0.25) !important;
     }
 
     .face-box.pet {
@@ -3075,8 +3074,10 @@
     .face-box.pet.is-hover-highlight,
     .face-box.pet:hover {
       border-color: #c084fc !important;
-      box-shadow: 0 0 22px rgba(168, 85, 247, 0.9), inset 0 0 14px rgba(168, 85, 247, 0.35) !important;
-      background: rgba(168, 85, 247, 0.22) !important;
+      outline: 2px solid rgba(192, 132, 252, 0.9);
+      outline-offset: -1px;
+      box-shadow: 0 0 8px rgba(168, 85, 247, 0.6) !important;
+      background: rgba(168, 85, 247, 0.25) !important;
     }
 
     .face-box.pet-untagged {
@@ -3086,8 +3087,10 @@
     .face-box.pet-untagged.is-hover-highlight,
     .face-box.pet-untagged:hover {
       border-color: #f0abfc !important;
-      box-shadow: 0 0 22px rgba(216, 70, 239, 0.9), inset 0 0 14px rgba(216, 70, 239, 0.35) !important;
-      background: rgba(168, 85, 247, 0.25) !important;
+      outline: 2px solid rgba(240, 171, 252, 0.9);
+      outline-offset: -1px;
+      box-shadow: 0 0 8px rgba(216, 70, 239, 0.6) !important;
+      background: rgba(168, 85, 247, 0.28) !important;
     }
 
     .face-box.untagged {
@@ -3097,8 +3100,10 @@
     .face-box.untagged.is-hover-highlight,
     .face-box.untagged:hover {
       border-color: #fbbf24 !important;
-      box-shadow: 0 0 22px rgba(245, 158, 11, 0.9), inset 0 0 14px rgba(245, 158, 11, 0.35) !important;
-      background: rgba(245, 158, 11, 0.22) !important;
+      outline: 2px solid rgba(251, 191, 36, 0.9);
+      outline-offset: -1px;
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.6) !important;
+      background: rgba(245, 158, 11, 0.25) !important;
     }
 
     .face-box-tag {
@@ -3116,12 +3121,11 @@
       display: flex;
       align-items: center;
       gap: 4px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-      pointer-events: auto;
-      transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.12s ease, box-shadow 0.12s ease;
-      will-change: transform;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      pointer-events: none; /* Prevent mouse event bouncing between box and tag */
       transform: translateZ(0);
       backface-visibility: hidden;
+      transition: none;
     }
 
     .face-box.is-hover-highlight .face-box-tag,
@@ -3129,26 +3133,26 @@
       transform: translateY(-2px) translateZ(0);
       background: rgba(15, 23, 42, 1);
       border-color: #60a5fa;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.8), 0 0 14px rgba(59, 130, 246, 0.7);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7), 0 0 8px rgba(59, 130, 246, 0.5);
       color: #fff;
     }
 
     .face-box.tagged.is-hover-highlight .face-box-tag,
     .face-box.tagged:hover .face-box-tag {
       border-color: #34d399;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.8), 0 0 14px rgba(16, 185, 129, 0.7);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7), 0 0 8px rgba(16, 185, 129, 0.5);
     }
 
     .face-box.pet.is-hover-highlight .face-box-tag,
     .face-box.pet:hover .face-box-tag {
       border-color: #c084fc;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.8), 0 0 14px rgba(168, 85, 247, 0.7);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7), 0 0 8px rgba(168, 85, 247, 0.5);
     }
 
     .face-box.untagged.is-hover-highlight .face-box-tag,
     .face-box.untagged:hover .face-box-tag {
       border-color: #fbbf24;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.8), 0 0 14px rgba(245, 158, 11, 0.7);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7), 0 0 8px rgba(245, 158, 11, 0.5);
     }
 
     .face-overlay-toolbar {
@@ -4925,7 +4929,7 @@
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
             </svg>
           </span>
-          <span>PIXELMEMORY<span class="brand-sub">AI</span></span>
+          <span>VOXLERY<span class="brand-sub">AI</span></span>
         </div>
       </div>
 
@@ -6549,7 +6553,7 @@
                 <span>📋 Copy to Clipboard</span>
               </button>
               <button type="button" class="tool-btn" id="collageSaveLibraryBtn" style="color: #67e8f9; border-color: rgba(6,182,212,0.4);">
-                <span>💾 Save to PixelMemory</span>
+                <span>💾 Save to Voxlery</span>
               </button>
             </div>
             <div id="collageSaveFeedback" class="save-feedback" style="display: none;"></div>
@@ -6587,7 +6591,7 @@
 
   <script>
     const $ = (sel) => document.querySelector(sel);
-    const isTauri = typeof window !== 'undefined' && (
+    const isTauriApp = typeof window !== 'undefined' && (
       window.__TAURI_INTERNALS__ !== undefined ||
       window.__TAURI__ !== undefined ||
       location.protocol === 'tauri:' ||
@@ -6595,7 +6599,7 @@
       location.protocol === 'file:' ||
       location.port === '1420'
     );
-    const API = isTauri || location.origin === 'null' ? 'http://127.0.0.1:8642' : '';
+    const API = isTauriApp || location.origin === 'null' ? 'http://127.0.0.1:8642' : '';
 
     // Initialize native Tauri window controls if running in desktop shell
     function initTauriWindowControls() {
@@ -6679,7 +6683,11 @@
       { id: 'sunset', name: 'Sunset Glow', icon: '🌅', color: '#f97316', desc: 'Twilight Rose & Tangerine' },
     ];
 
-    let currentTheme = localStorage.getItem('pixelmemory_theme') || 'dark';
+    try {
+      const _oldTheme = localStorage.getItem('pixelmemory_theme');
+      if (_oldTheme) { localStorage.setItem('voxlery_theme', _oldTheme); localStorage.removeItem('pixelmemory_theme'); }
+    } catch (e) {}
+    let currentTheme = localStorage.getItem('voxlery_theme') || 'dark';
 
     function applyTheme(themeId, save = true) {
       const matched = THEMES.find(t => t.id === themeId) || THEMES[0];
@@ -6687,7 +6695,7 @@
       document.documentElement.setAttribute('data-theme', currentTheme);
       document.body.setAttribute('data-theme', currentTheme);
       if (save) {
-        try { localStorage.setItem('pixelmemory_theme', currentTheme); } catch (e) {}
+        try { localStorage.setItem('voxlery_theme', currentTheme); } catch (e) {}
       }
 
       // Update UI active indicators
@@ -7412,7 +7420,7 @@
       const ext = format === 'image/jpeg' ? 'jpg' : 'png';
       const dataUrl = exportCanvas.toDataURL(format, 0.95);
       const link = document.createElement('a');
-      link.download = `pixelmemory_collage_${new Date().toISOString().replace(/[:.]/g, '-')}.${ext}`;
+      link.download = `voxlery_collage_${new Date().toISOString().replace(/[:.]/g, '-')}.${ext}`;
       link.href = dataUrl;
       link.click();
       showToast('📥 Collage downloaded successfully!');
@@ -7457,7 +7465,7 @@
 
         const data = await res.json();
         if (data.status === 'ok') {
-          showToast('💾 Collage saved to PixelMemory library!');
+          showToast('💾 Collage saved to Voxlery library!');
           if (feedback) {
             feedback.style.display = 'block';
             feedback.className = 'save-feedback success';
@@ -7472,7 +7480,7 @@
         showToast(`Failed to save collage: ${err.message}`);
       } finally {
         btn.disabled = false;
-        btn.innerHTML = '<span>💾 Save to PixelMemory</span>';
+        btn.innerHTML = '<span>💾 Save to Voxlery</span>';
       }
     }
 
@@ -7754,7 +7762,8 @@
       <div class="state-box" style="grid-column: 1 / -1;">
         <div class="state-icon">⚠️</div>
         <div class="state-title">Search Server Disconnected</div>
-        <div class="state-desc">Make sure the PixelMemory server is active on port 8642.</div>
+        <div class="state-desc">Make sure the Voxlery server is active on port 8642.</div>
+        ${isTauriApp ? '<div class="state-desc" style="margin-top: 0.4rem; font-size: 0.78rem; color: var(--text-dim);">Run <code style="background:rgba(255,255,255,0.08); padding:2px 6px; border-radius:4px;">python -m backend</code> from the project directory before launching the app.</div>' : ''}
       </div>
     `;
       }
@@ -10557,7 +10566,7 @@
     $('#dockDeleteBtn').addEventListener('click', async () => {
       if (selectedPhotoIds.size === 0) return;
       const count = selectedPhotoIds.size;
-      if (!confirm(`Remove ${count} photo(s) from the PixelMemory gallery?\n\nOriginal photo files on your disk will NOT be deleted.`)) return;
+      if (!confirm(`Remove ${count} photo(s) from the Voxlery gallery?\n\nOriginal photo files on your disk will NOT be deleted.`)) return;
 
       try {
         const res = await fetch(`${API}/api/photos/bulk-delete`, {
@@ -12558,7 +12567,7 @@
 
         box.appendChild(tag);
 
-        // Synchronized highlight on box hover
+        // Synchronized highlight on box hover (instant and flicker-free)
         box.addEventListener('mouseenter', () => {
           overlay.classList.add('has-hover');
           box.classList.add('is-hover-highlight');
@@ -12567,10 +12576,12 @@
         });
 
         box.addEventListener('mouseleave', () => {
-          overlay.classList.remove('has-hover');
           box.classList.remove('is-hover-highlight');
           const chip = $(`#modalPeopleChipsList .modal-person-chip[data-face-id="${f.id}"]`);
           if (chip) chip.classList.remove('is-hover-highlight');
+          if (!overlay.querySelector('.face-box.is-hover-highlight')) {
+            overlay.classList.remove('has-hover');
+          }
         });
 
         box.addEventListener('click', (e) => {
@@ -12630,7 +12641,7 @@
       list.querySelectorAll('.modal-person-chip').forEach(chip => {
         const fid = Number(chip.dataset.faceId);
 
-        // Synchronized highlight on chip hover
+        // Synchronized highlight on chip hover (instant and flicker-free)
         chip.addEventListener('mouseenter', () => {
           const overlay = $('#faceOverlay');
           if (overlay) overlay.classList.add('has-hover');
@@ -12641,10 +12652,12 @@
 
         chip.addEventListener('mouseleave', () => {
           const overlay = $('#faceOverlay');
-          if (overlay) overlay.classList.remove('has-hover');
           chip.classList.remove('is-hover-highlight');
           const box = $(`#faceOverlay .face-box[data-face-id="${fid}"]`);
           if (box) box.classList.remove('is-hover-highlight');
+          if (overlay && !overlay.querySelector('.face-box.is-hover-highlight') && !$('#modalPeopleChipsList .modal-person-chip.is-hover-highlight')) {
+            overlay.classList.remove('has-hover');
+          }
         });
 
         chip.addEventListener('click', (e) => {
@@ -13003,9 +13016,16 @@
       const floatingBtn = $('#sidebarFloatingCollapseBtn');
       if (!sidebar || !resizer) return;
 
-      let savedWidth = parseInt(localStorage.getItem('pixelmemory_sidebar_width') || '260', 10);
+      try {
+        const _oldW = localStorage.getItem('pixelmemory_sidebar_width');
+        if (_oldW) { localStorage.setItem('voxlery_sidebar_width', _oldW); localStorage.removeItem('pixelmemory_sidebar_width'); }
+        const _oldC = localStorage.getItem('pixelmemory_sidebar_collapsed');
+        if (_oldC) { localStorage.setItem('voxlery_sidebar_collapsed', _oldC); localStorage.removeItem('pixelmemory_sidebar_collapsed'); }
+      } catch (e) {}
+
+      let savedWidth = parseInt(localStorage.getItem('voxlery_sidebar_width') || '260', 10);
       if (isNaN(savedWidth) || savedWidth < 180 || savedWidth > 650) savedWidth = 260;
-      let isCollapsed = localStorage.getItem('pixelmemory_sidebar_collapsed') === 'true';
+      let isCollapsed = localStorage.getItem('voxlery_sidebar_collapsed') === 'true';
 
       sidebar.style.setProperty('--sidebar-width', `${savedWidth}px`);
       sidebar.style.width = `${savedWidth}px`;
@@ -13020,11 +13040,11 @@
         if (isCollapsed) {
           sidebar.classList.add('collapsed');
           sidebar.style.width = '0px';
-          localStorage.setItem('pixelmemory_sidebar_collapsed', 'true');
+          localStorage.setItem('voxlery_sidebar_collapsed', 'true');
         } else {
           sidebar.classList.remove('collapsed');
           sidebar.style.width = `${savedWidth}px`;
-          localStorage.setItem('pixelmemory_sidebar_collapsed', 'false');
+          localStorage.setItem('voxlery_sidebar_collapsed', 'false');
         }
       }
 
@@ -13095,7 +13115,7 @@
           document.body.style.userSelect = '';
           window.removeEventListener('mousemove', onMouseMove);
           window.removeEventListener('mouseup', onMouseUp);
-          localStorage.setItem('pixelmemory_sidebar_width', savedWidth.toString());
+          localStorage.setItem('voxlery_sidebar_width', savedWidth.toString());
         };
 
         window.addEventListener('mousemove', onMouseMove, { passive: true });
@@ -13108,7 +13128,7 @@
         savedWidth = 260;
         sidebar.style.width = '260px';
         sidebar.style.setProperty('--sidebar-width', '260px');
-        localStorage.setItem('pixelmemory_sidebar_width', '260');
+        localStorage.setItem('voxlery_sidebar_width', '260');
         if (sidebar.classList.contains('collapsed')) {
           toggleSidebar(false);
         }

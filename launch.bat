@@ -1,6 +1,6 @@
 @echo off
 setlocal
-title PixelMemory Platform Launcher
+title Voxlery Platform Launcher
 
 cd /d "%~dp0"
 
