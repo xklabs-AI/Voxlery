@@ -140,6 +140,16 @@ class UpdateNoteRequest(BaseModel):
     day_date: Optional[str] = None
 
 
+class EntityBiographyRequest(BaseModel):
+    model: Optional[str] = "gemma4:e4b"
+    force: bool = False
+
+
+class EntityAskRequest(BaseModel):
+    query: str
+    model: Optional[str] = "gemma4:e4b"
+
+
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Voxlery", version="1.0.0")
@@ -2600,6 +2610,69 @@ def set_person_avatar(person_id: int, face_id: int):
         update_person(conn, person_id, avatar_face_id=face_id)
         updated = get_person_by_id(conn, person_id)
     return {"status": "ok", "person": updated}
+
+
+# ── Tagged Entity Biography & Q&A Search ─────────────────
+
+@app.get("/api/people/{person_id}/biography")
+def get_person_biography_endpoint(person_id: int):
+    """Retrieve cached biography for a tagged person or pet."""
+    from backend.db import get_entity_biography
+    with get_conn() as conn:
+        person = get_person_by_id(conn, person_id)
+        if not person:
+            raise HTTPException(404, "Person not found")
+        cached = get_entity_biography(conn, person_id)
+        if not cached:
+            return {"status": "not_found", "person": person, "biography": None}
+        return {
+            "status": "ok",
+            "person": person,
+            "biography": cached["biography"],
+            "model_used": cached["model_used"],
+            "photo_count": cached["photo_count"],
+            "updated_at": cached["updated_at"],
+            "cached": True,
+        }
+
+
+@app.post("/api/people/{person_id}/biography")
+def generate_person_biography_endpoint(person_id: int, req: EntityBiographyRequest):
+    """Generate or regenerate AI Biography for a person/pet using Gemma 4 E4B."""
+    from backend.biography import generate_entity_biography
+    try:
+        res = generate_entity_biography(person_id, model=req.model or "gemma4:e4b", force=req.force)
+        return res
+    except ValueError as e:
+        raise HTTPException(404, str(e))
+    except Exception as e:
+        raise HTTPException(500, f"Biography generation failed: {e}")
+
+
+@app.delete("/api/people/{person_id}/biography")
+def delete_person_biography_endpoint(person_id: int):
+    """Delete cached AI biography for a person/pet."""
+    from backend.db import delete_entity_biography
+    with get_conn() as conn:
+        person = get_person_by_id(conn, person_id)
+        if not person:
+            raise HTTPException(404, "Person not found")
+        deleted = delete_entity_biography(conn, person_id)
+    return {"status": "ok", "deleted": deleted, "person_id": person_id}
+
+
+@app.post("/api/people/{person_id}/ask")
+def ask_person_endpoint(person_id: int, req: EntityAskRequest):
+    """Answer natural language questions about a tagged person/pet using Gemma 4 E4B."""
+    from backend.biography import search_entity_info
+    try:
+        res = search_entity_info(person_id, query=req.query, model=req.model or "gemma4:e4b")
+        return res
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    except Exception as e:
+        raise HTTPException(500, f"Entity search failed: {e}")
+
 
 
 def _run_library_face_scan():

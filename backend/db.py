@@ -132,6 +132,16 @@ CREATE TABLE IF NOT EXISTS face_rejections (
 );
 
 CREATE INDEX IF NOT EXISTS idx_face_rejections_person ON face_rejections(person_id);
+
+-- Entity Biographies (AI-synthesized profiles for People and Pets)
+CREATE TABLE IF NOT EXISTS entity_biographies (
+    person_id   INTEGER PRIMARY KEY REFERENCES people(id) ON DELETE CASCADE,
+    biography   TEXT NOT NULL,
+    model_used  TEXT NOT NULL,
+    photo_count INTEGER NOT NULL DEFAULT 0,
+    created_at  TEXT DEFAULT (datetime('now')),
+    updated_at  TEXT DEFAULT (datetime('now'))
+);
 """
 
 
@@ -1140,5 +1150,40 @@ def deduplicate_faces(conn: sqlite3.Connection) -> int:
     return deleted_count + tag_dups_deleted
 
 
+# ── Entity Biographies ────────────────────────────────────
+
+def get_entity_biography(conn: sqlite3.Connection, person_id: int) -> dict | None:
+    """Fetch cached AI biography for a person or pet."""
+    row = conn.execute(
+        "SELECT * FROM entity_biographies WHERE person_id = ?",
+        (person_id,),
+    ).fetchone()
+    return dict(row) if row else None
 
 
+def upsert_entity_biography(
+    conn: sqlite3.Connection,
+    person_id: int,
+    biography: str,
+    model_used: str,
+    photo_count: int = 0,
+) -> None:
+    """Insert or update cached AI biography."""
+    conn.execute(
+        """INSERT INTO entity_biographies (person_id, biography, model_used, photo_count, created_at, updated_at)
+           VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))
+           ON CONFLICT(person_id) DO UPDATE SET
+               biography = excluded.biography,
+               model_used = excluded.model_used,
+               photo_count = excluded.photo_count,
+               updated_at = datetime('now')""",
+        (person_id, biography.strip(), model_used.strip(), photo_count),
+    )
+    conn.commit()
+
+
+def delete_entity_biography(conn: sqlite3.Connection, person_id: int) -> bool:
+    """Delete cached AI biography for a person or pet."""
+    cur = conn.execute("DELETE FROM entity_biographies WHERE person_id = ?", (person_id,))
+    conn.commit()
+    return cur.rowcount > 0

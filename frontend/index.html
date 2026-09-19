@@ -3871,6 +3871,244 @@
     }
 
     /* ═══════════════════════════════════════════════════════
+       ENTITY AI BIOGRAPHY & Q&A SEARCH
+       ═══════════════════════════════════════════════════════ */
+    .entity-bio-modal-window {
+      max-width: 860px;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .entity-bio-header-card {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      position: relative;
+    }
+    .entity-bio-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.25rem;
+    }
+    .entity-bio-model-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #a78bfa;
+      background: rgba(139, 92, 246, 0.14);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      border-radius: 12px;
+      padding: 0.15rem 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .entity-bio-nav {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.25rem;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .entity-bio-tab-btn {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s ease;
+    }
+    .entity-bio-tab-btn:hover {
+      color: #fff;
+    }
+    .entity-bio-tab-btn.active {
+      color: #38bdf8;
+      border-bottom-color: #38bdf8;
+    }
+    .entity-bio-body {
+      overflow-y: auto;
+      flex: 1;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .entity-bio-pane {
+      display: none;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .entity-bio-pane.active {
+      display: flex;
+    }
+    .entity-bio-card {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      color: #e2e8f0;
+      line-height: 1.65;
+      font-size: 0.88rem;
+    }
+    .entity-bio-card .bio-heading-1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0.2rem 0 0.75rem 0;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .entity-bio-card .bio-heading-2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #93c5fd;
+      margin: 1.1rem 0 0.45rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .entity-bio-card .bio-heading-3 {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin: 0.8rem 0 0.35rem 0;
+    }
+    .entity-bio-card .bio-para {
+      margin: 0 0 0.75rem 0;
+    }
+    .entity-bio-card .bio-quote {
+      border-left: 3px solid #38bdf8;
+      padding: 0.45rem 0.85rem;
+      margin: 0.6rem 0;
+      background: rgba(56, 189, 248, 0.08);
+      border-radius: 0 6px 6px 0;
+      color: #bae6fd;
+      font-style: italic;
+    }
+    .entity-bio-card .bio-list {
+      margin: 0.3rem 0 0.8rem 1.25rem;
+      padding: 0;
+    }
+    .entity-bio-card .bio-list-item {
+      margin-bottom: 0.35rem;
+    }
+    .entity-bio-card .bio-list-ordered {
+      margin: 0.3rem 0 0.8rem 1.25rem;
+      padding: 0;
+    }
+    .entity-bio-card .bio-list-item-num {
+      margin-bottom: 0.35rem;
+    }
+    .entity-bio-card .bio-list-num {
+      font-weight: 700;
+      color: #93c5fd;
+    }
+    .entity-ask-input-wrap {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .entity-ask-input {
+      flex: 1;
+      background: #0f172a;
+      border: 1px solid var(--border-highlight);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.95rem;
+      color: #fff;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .entity-ask-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+    .quick-prompt-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.25rem;
+    }
+    .quick-prompt-chip {
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      border-radius: 16px;
+      padding: 0.28rem 0.7rem;
+      font-size: 0.74rem;
+      color: #7dd3fc;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .quick-prompt-chip:hover {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: #38bdf8;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .entity-ask-answer-card {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .entity-ask-answer-text {
+      color: #f1f5f9;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    .entity-evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .entity-evidence-card {
+      background: #0b1329;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .entity-evidence-card:hover {
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+    }
+    .entity-evidence-thumb {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      background: #1e293b;
+      display: block;
+    }
+    .entity-evidence-meta {
+      padding: 0.55rem 0.7rem;
+      font-size: 0.72rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    /* ═══════════════════════════════════════════════════════
        THEME SYSTEM (Dark, Ocean, White, Tropical, Christmas, Galaxy, Sunset)
        ═══════════════════════════════════════════════════════ */
 
@@ -6209,6 +6447,9 @@
               <button type="button" class="cta-btn" id="btnDetailViewPhotos" style="font-size: 0.78rem; padding: 0.4rem 0.85rem;">
                 <span>🖼️ View All Photos (<span id="personDetailPhotoCount">0</span>)</span>
               </button>
+              <button type="button" class="tool-btn" id="btnDetailBio" style="background: linear-gradient(135deg, #10b981, #059669); border: none; color: #fff; font-size: 0.78rem; padding: 0.4rem 0.85rem;">
+                <span>📖 AI Biography & Search</span>
+              </button>
               <button type="button" class="tool-btn" id="btnDetailStory" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; color: #fff; font-size: 0.78rem; padding: 0.4rem 0.85rem;">
                 <span>✨ Generate Story</span>
               </button>
@@ -6303,6 +6544,107 @@
         <div style="display: flex; gap: 0.5rem; align-items: center;">
           <button type="button" class="tool-btn" id="reviewMatchesCancelBtn">Cancel</button>
           <button type="button" class="cta-btn" id="reviewMatchesConfirmBtn">Confirm & Tag Selected</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Entity AI Biography & Q&A Modal -->
+  <div class="modal-backdrop" id="entityBioModal">
+    <div class="modal-window entity-bio-modal-window">
+      <div class="modal-top">
+        <div class="modal-title" id="entityBioModalTitle">📖 AI Biography & Entity Search</div>
+        <button class="modal-close-btn" id="entityBioClose">&times;</button>
+      </div>
+
+      <!-- Entity Header Card -->
+      <div style="padding: 1rem 1.25rem 0.5rem 1.25rem;">
+        <div class="entity-bio-header-card">
+          <div class="person-avatar-wrap" style="width: 72px; height: 72px; min-width: 72px;" id="entityBioAvatarWrap"></div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                <h2 id="entityBioName" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin: 0;"></h2>
+                <span id="entityBioRelBadge" class="person-rel-text"></span>
+              </div>
+              <div style="display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;">
+                <button type="button" class="tool-btn" id="entityBioCopyBtn" style="font-size: 0.74rem; padding: 0.32rem 0.65rem;" title="Copy text to clipboard">📋 Copy</button>
+                <button type="button" class="tool-btn" id="entityBioRegenerateBtn" style="font-size: 0.74rem; padding: 0.32rem 0.65rem;" title="Force regenerate fresh biography with Gemma 4 E4B">🔄 Regenerate</button>
+                <button type="button" class="cta-btn" id="entityBioViewPhotosBtn" style="font-size: 0.74rem; padding: 0.32rem 0.75rem;">🖼️ View Photos</button>
+              </div>
+            </div>
+            <div class="entity-bio-meta-row">
+              <span id="entityBioPhotoCountBadge" class="vlm-badge" style="font-size: 0.7rem;">0 photos</span>
+              <span class="entity-bio-model-badge">🤖 Gemma 4 E4B</span>
+              <span id="entityBioDateBadge" style="font-size: 0.7rem; color: var(--text-dim);"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="entity-bio-nav">
+        <button type="button" class="entity-bio-tab-btn active" id="entityBioTabBtnBio">📖 AI Biography</button>
+        <button type="button" class="entity-bio-tab-btn" id="entityBioTabBtnAsk">🔍 Ask & Search</button>
+      </div>
+
+      <!-- Tab Bodies -->
+      <div class="entity-bio-body">
+        <!-- Biography Pane -->
+        <div class="entity-bio-pane active" id="entityBioPaneBio">
+          <div id="entityBioLoading" style="display: none; text-align: center; padding: 3rem 1rem;">
+            <div class="spinner" style="width: 28px; height: 28px; border-width: 3px; margin: 0 auto 0.85rem auto;"></div>
+            <div style="font-weight: 600; color: #e2e8f0; font-size: 0.95rem;">Compiling AI Biography with Gemma 4 E4B...</div>
+            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 0.35rem;">Synthesizing visual descriptions, milestones, locations, and companion bonds across library photos.</div>
+          </div>
+          <div id="entityBioContent" class="entity-bio-card" style="display: none;"></div>
+          <div id="entityBioEmpty" style="display: none; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+            <div style="font-size: 2.5rem; margin-bottom: 0.6rem;">📖</div>
+            <div style="font-weight: 600; font-size: 1rem; color: #fff;">No biography generated yet</div>
+            <div style="font-size: 0.8rem; margin-top: 0.3rem;">Click "Generate Biography" to synthesize information from their tagged photos using Gemma 4 E4B.</div>
+            <button type="button" class="cta-btn" id="entityBioGenerateEmptyBtn" style="margin-top: 1rem;">✨ Generate Biography</button>
+          </div>
+        </div>
+
+        <!-- Ask AI Pane -->
+        <div class="entity-bio-pane" id="entityBioPaneAsk">
+          <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+            <div class="entity-ask-input-wrap">
+              <input type="text" id="entityAskInput" class="entity-ask-input" placeholder="Ask anything about this person/pet (e.g. What toys do they play with? Where did they travel?)..." />
+              <button type="button" class="cta-btn" id="entityAskSubmitBtn" style="padding: 0.65rem 1.1rem; white-space: nowrap;">Ask AI</button>
+            </div>
+            <div>
+              <div style="font-size: 0.72rem; color: var(--text-dim); margin-bottom: 0.35rem;">💡 Suggested questions to ask Gemma 4 E4B:</div>
+              <div class="quick-prompt-chips" id="entityAskChips"></div>
+            </div>
+          </div>
+
+          <div id="entityAskLoading" style="display: none; text-align: center; padding: 2.5rem 1rem;">
+            <div class="spinner" style="width: 24px; height: 24px; border-width: 3px; margin: 0 auto 0.75rem auto;"></div>
+            <div style="font-weight: 600; color: #e2e8f0; font-size: 0.92rem;">Searching photo observations with Gemma 4 E4B...</div>
+            <div style="font-size: 0.76rem; color: var(--text-dim); margin-top: 0.25rem;">Filtering relevant library photos and evaluating visual facts.</div>
+          </div>
+
+          <div id="entityAskResultWrap" style="display: none; flex-direction: column; gap: 1rem;">
+            <div class="entity-ask-answer-card">
+              <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.5rem;">
+                <div style="font-size: 0.8rem; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 0.4rem;">
+                  <span>🤖 Gemma 4 E4B Answer</span>
+                </div>
+                <button type="button" class="tool-btn" id="entityAskCopyAnswerBtn" style="font-size: 0.72rem; padding: 0.25rem 0.55rem;">📋 Copy Answer</button>
+              </div>
+              <div id="entityAskAnswerText" class="entity-ask-answer-text"></div>
+            </div>
+
+            <!-- Evidence Photos Grid -->
+            <div>
+              <div style="font-size: 0.82rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem;">
+                <span>📸 Supporting Photo Evidence</span>
+                <span id="entityEvidenceCountBadge" class="vlm-badge" style="font-size: 0.7rem;">0</span>
+              </div>
+              <div id="entityEvidenceGrid" class="entity-evidence-grid"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -11830,6 +12172,7 @@
         return `
           <div class="person-card" data-person-id="${p.id}" title="Click to view variations and profile">
             <div class="person-card-actions">
+              <button type="button" class="person-card-btn btn-bio-person" data-person-id="${p.id}" title="AI Biography & Search for ${escapeHtml(p.name)}">📖</button>
               <button type="button" class="person-card-btn btn-edit-person" data-person-id="${p.id}" title="Rename / Edit ${escapeHtml(p.name)}">✏️</button>
               <button type="button" class="person-card-btn delete-btn btn-delete-person" data-person-id="${p.id}" title="Delete ${escapeHtml(p.name)}">🗑️</button>
             </div>
@@ -11850,6 +12193,15 @@
           const pid = Number(card.dataset.personId);
           const person = allPeople.find(p => p.id === pid);
           if (person) openPersonDetailModal(person);
+        });
+      });
+
+      grid.querySelectorAll('.btn-bio-person').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const pid = Number(btn.dataset.personId);
+          const person = allPeople.find(p => p.id === pid);
+          if (person) openEntityBioModal(person);
         });
       });
 
@@ -11892,6 +12244,7 @@
               <span>${icon} Photos featuring <strong>${escapeHtml(person.name)}</strong> (${escapeHtml(person.relationship || 'Friend')}) — ${photos.length} photos</span>
             </div>
             <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <button class="small-add-btn" id="personBioHeaderBtn" style="background: linear-gradient(135deg, #10b981, #059669); border: none; color: #fff; font-size: 0.76rem; padding: 0.3rem 0.75rem;">📖 AI Biography & Search</button>
               <button class="small-add-btn" id="personVariationsHeaderBtn" style="background: rgba(99,102,241,0.2); border: 1px solid rgba(99,102,241,0.4); color: #e0e7ff; font-size: 0.76rem; padding: 0.3rem 0.65rem;">🔍 Variations & Face Detections</button>
               <button class="small-add-btn" id="personStoryBtn" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; color: #fff; font-size: 0.76rem; padding: 0.3rem 0.75rem;">✨ Generate Story</button>
               <button class="tiny-edit-btn" id="personEditBtn" style="font-size: 0.76rem; padding: 0.3rem 0.6rem;">✏️ Rename / Edit</button>
@@ -11905,6 +12258,10 @@
 
         $('#personBackToPeopleBtn')?.addEventListener('click', () => openPeopleExplorer());
         $('#personBackToGalleryBtn')?.addEventListener('click', () => showAllPhotos());
+
+        $('#personBioHeaderBtn')?.addEventListener('click', () => {
+          openEntityBioModal(person);
+        });
 
         $('#personVariationsHeaderBtn')?.addEventListener('click', () => {
           openPersonDetailModal(person);
@@ -12248,6 +12605,11 @@
         showPersonPhotos(person);
       };
 
+      $('#btnDetailBio').onclick = () => {
+        modal.classList.remove('active');
+        openEntityBioModal(person);
+      };
+
       $('#btnDetailStory').onclick = async () => {
         try {
           const res = await fetch(`${API}/api/people/${person.id}/photos`);
@@ -12463,6 +12825,361 @@
     $('#personDetailModal')?.addEventListener('click', (e) => { if (e.target === $('#personDetailModal')) $('#personDetailModal').classList.remove('active'); });
     $('#reviewMatchesClose')?.addEventListener('click', () => $('#reviewMatchesModal').classList.remove('active'));
     $('#reviewMatchesCancelBtn')?.addEventListener('click', () => $('#reviewMatchesModal').classList.remove('active'));
+
+    // ═══════════════════════════════════════════════════════
+    // ENTITY AI BIOGRAPHY & Q&A SEARCH (GEMMA 4 E4B)
+    // ═══════════════════════════════════════════════════════
+    let currentBioPerson = null;
+    let currentBioText = '';
+
+    function formatMarkdownText(md) {
+      if (!md) return '';
+      let html = escapeHtml(md);
+      // Headings
+      html = html.replace(/^### (.*$)/gim, '<h4 class="bio-heading-3">$1</h4>');
+      html = html.replace(/^## (.*$)/gim, '<h3 class="bio-heading-2">$1</h3>');
+      html = html.replace(/^# (.*$)/gim, '<h2 class="bio-heading-1">$1</h2>');
+      // Bold & Italic
+      html = html.replace(/\*\*\*(.*?)\*\*\*/gim, '<strong><em>$1</em></strong>');
+      html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
+      html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
+      // Blockquotes
+      html = html.replace(/^\> (.*$)/gim, '<blockquote class="bio-quote">$1</blockquote>');
+      // Bullet lists
+      html = html.replace(/^\s*[\-\*]\s+(.*$)/gim, '<li class="bio-list-item">$1</li>');
+      html = html.replace(/(<li class="bio-list-item">.*<\/li>(\n|$) *)+/gim, '<ul class="bio-list">$&</ul>');
+      // Numbered lists
+      html = html.replace(/^\s*(\d+)\.\s+(.*$)/gim, '<li class="bio-list-item-num"><span class="bio-list-num">$1.</span> $2</li>');
+      html = html.replace(/(<li class="bio-list-item-num">.*<\/li>(\n|$) *)+/gim, '<ol class="bio-list-ordered">$&</ol>');
+      // Paragraphs
+      html = html.replace(/\n\n+/g, '</p><p class="bio-para">');
+      html = `<p class="bio-para">${html}</p>`;
+      html = html.replace(/<p class="bio-para">\s*<\/p>/g, '');
+      // Un-nest block elements accidentally wrapped in p
+      html = html.replace(/<p class="bio-para">(<h[2-4].*?<\/h[2-4]>)<\/p>/g, '$1');
+      html = html.replace(/<p class="bio-para">(<ul.*?<\/ul>)<\/p>/g, '$1');
+      html = html.replace(/<p class="bio-para">(<ol.*?<\/ol>)<\/p>/g, '$1');
+      html = html.replace(/<p class="bio-para">(<blockquote.*?<\/blockquote>)<\/p>/g, '$1');
+      return html;
+    }
+
+    async function openEntityBioModal(person, initialTab = 'bio') {
+      if (!person) return;
+      currentBioPerson = person;
+      currentBioText = '';
+
+      const modal = $('#entityBioModal');
+      if (!modal) return;
+
+      const icon = getRelationshipIcon(person.relationship);
+      $('#entityBioModalTitle').textContent = `📖 ${person.name} — AI Biography & Search`;
+      $('#entityBioName').textContent = person.name;
+      $('#entityBioRelBadge').textContent = `${icon} ${person.relationship || 'Friend'}`;
+      $('#entityBioPhotoCountBadge').textContent = `${person.photo_count || 0} ${person.photo_count === 1 ? 'photo' : 'photos'}`;
+      $('#entityBioDateBadge').textContent = '';
+
+      // Avatar
+      const avatarWrap = $('#entityBioAvatarWrap');
+      if (person.avatar_face_id) {
+        avatarWrap.innerHTML = `
+          <img class="person-avatar-img" src="${API}/api/faces/thumb/${person.avatar_face_id}" alt="${escapeHtml(person.name)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+          <span class="person-avatar-fallback" style="display:none; font-size: 1.8rem;">${icon}</span>
+        `;
+      } else {
+        avatarWrap.innerHTML = `<span class="person-avatar-fallback" style="font-size: 1.8rem;">${icon}</span>`;
+      }
+
+      // Quick prompt chips depending on relationship
+      renderQuickPromptChips(person);
+
+      // Reset Ask UI
+      $('#entityAskInput').value = '';
+      $('#entityAskLoading').style.display = 'none';
+      $('#entityAskResultWrap').style.display = 'none';
+
+      // Switch tab
+      switchEntityBioTab(initialTab);
+
+      modal.classList.add('active');
+
+      // Load biography
+      await loadEntityBio(person, false);
+    }
+
+    function switchEntityBioTab(tab) {
+      const isBio = tab === 'bio';
+      $('#entityBioTabBtnBio')?.classList.toggle('active', isBio);
+      $('#entityBioTabBtnAsk')?.classList.toggle('active', !isBio);
+      $('#entityBioPaneBio')?.classList.toggle('active', isBio);
+      $('#entityBioPaneAsk')?.classList.toggle('active', !isBio);
+      if (!isBio) {
+        setTimeout(() => $('#entityAskInput')?.focus(), 100);
+      }
+    }
+
+    function renderQuickPromptChips(person) {
+      const chipsContainer = $('#entityAskChips');
+      if (!chipsContainer) return;
+
+      const isPet = (person.relationship || '').toLowerCase().includes('pet') ||
+                    (person.relationship || '').toLowerCase().includes('cat') ||
+                    (person.relationship || '').toLowerCase().includes('dog');
+
+      let prompts = [];
+      if (isPet) {
+        prompts = [
+          `What toys or games does ${person.name} play with?`,
+          `Where does ${person.name} like to sleep or relax?`,
+          `What are ${person.name}'s notable habits or behaviors?`,
+          `Who are ${person.name}'s human or animal companions?`
+        ];
+      } else {
+        prompts = [
+          `Where has ${person.name} traveled or spent time?`,
+          `What activities or events is ${person.name} seen doing?`,
+          `What clothing or styles does ${person.name} typically wear?`,
+          `Who are ${person.name}'s frequent companions in photos?`
+        ];
+      }
+
+      chipsContainer.innerHTML = prompts.map(p => `
+        <div class="quick-prompt-chip" data-prompt="${escapeHtml(p)}">${escapeHtml(p)}</div>
+      `).join('');
+
+      chipsContainer.querySelectorAll('.quick-prompt-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const prompt = chip.dataset.prompt;
+          $('#entityAskInput').value = prompt;
+          submitEntityQuestion(prompt);
+        });
+      });
+    }
+
+    async function loadEntityBio(person, force = false) {
+      const loading = $('#entityBioLoading');
+      const content = $('#entityBioContent');
+      const empty = $('#entityBioEmpty');
+      const dateBadge = $('#entityBioDateBadge');
+
+      if (!person) return;
+
+      if (!force) {
+        // Try to fetch existing biography first
+        try {
+          loading.style.display = 'block';
+          content.style.display = 'none';
+          empty.style.display = 'none';
+
+          const res = await fetch(`${API}/api/people/${person.id}/biography`);
+          const data = await res.json();
+          loading.style.display = 'none';
+
+          if (data && data.biography) {
+            currentBioText = data.biography;
+            content.innerHTML = formatMarkdownText(data.biography);
+            content.style.display = 'block';
+            empty.style.display = 'none';
+            if (data.updated_at) {
+              const dt = new Date(data.updated_at);
+              dateBadge.textContent = `Updated ${dt.toLocaleDateString()} ${dt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+            }
+            return;
+          }
+        } catch (e) {
+          console.warn('Could not fetch existing biography:', e);
+        }
+      }
+
+      // If force or no existing biography, prompt user or auto-generate
+      if (!force) {
+        loading.style.display = 'none';
+        content.style.display = 'none';
+        empty.style.display = 'block';
+      } else {
+        await generateEntityBio(true);
+      }
+    }
+
+    async function generateEntityBio(force = true) {
+      if (!currentBioPerson) return;
+      const person = currentBioPerson;
+
+      const loading = $('#entityBioLoading');
+      const content = $('#entityBioContent');
+      const empty = $('#entityBioEmpty');
+      const dateBadge = $('#entityBioDateBadge');
+      const regenBtn = $('#entityBioRegenerateBtn');
+
+      loading.style.display = 'block';
+      content.style.display = 'none';
+      empty.style.display = 'none';
+      if (regenBtn) regenBtn.disabled = true;
+
+      try {
+        const res = await fetch(`${API}/api/people/${person.id}/biography`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model: 'gemma4:e4b', force: force })
+        });
+        const data = await res.json();
+
+        if (data && data.biography) {
+          currentBioText = data.biography;
+          content.innerHTML = formatMarkdownText(data.biography);
+          content.style.display = 'block';
+          empty.style.display = 'none';
+          if (data.updated_at) {
+            const dt = new Date(data.updated_at);
+            dateBadge.textContent = `Generated ${dt.toLocaleDateString()} ${dt.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+          }
+          showToast(`Generated AI Biography for ${person.name}`);
+        } else {
+          empty.style.display = 'block';
+          showToast(data.error || 'Failed to generate biography');
+        }
+      } catch (e) {
+        console.error('Error generating biography:', e);
+        empty.style.display = 'block';
+        showToast('Error communicating with Ollama Gemma 4 E4B');
+      } finally {
+        loading.style.display = 'none';
+        if (regenBtn) regenBtn.disabled = false;
+      }
+    }
+
+    async function submitEntityQuestion(queryArg = null) {
+      if (!currentBioPerson) return;
+      const person = currentBioPerson;
+
+      const input = $('#entityAskInput');
+      const query = (queryArg || input.value || '').trim();
+      if (!query) {
+        showToast('Please type a question first');
+        return;
+      }
+
+      const submitBtn = $('#entityAskSubmitBtn');
+      const loading = $('#entityAskLoading');
+      const resultWrap = $('#entityAskResultWrap');
+      const answerText = $('#entityAskAnswerText');
+      const evidenceGrid = $('#entityEvidenceGrid');
+      const evidenceCountBadge = $('#entityEvidenceCountBadge');
+
+      if (submitBtn) submitBtn.disabled = true;
+      loading.style.display = 'block';
+      resultWrap.style.display = 'none';
+
+      try {
+        const res = await fetch(`${API}/api/people/${person.id}/ask`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: query, model: 'gemma4:e4b' })
+        });
+        const data = await res.json();
+
+        if (data && data.answer) {
+          answerText.innerHTML = formatMarkdownText(data.answer);
+          const evidence = data.evidence || [];
+          evidenceCountBadge.textContent = evidence.length;
+
+          if (evidence.length > 0) {
+            evidenceGrid.innerHTML = evidence.map(ev => {
+              const dateStr = ev.date ? new Date(ev.date).toLocaleDateString() : 'Date unknown';
+              const placeStr = ev.place ? ev.place.split(',')[0] : 'Library photo';
+              return `
+                <div class="entity-evidence-card" data-photo-id="${ev.photo_id}" title="Click to view full photo in inspector">
+                  <img class="entity-evidence-thumb" src="${API}/api/thumb/${ev.photo_id}" alt="Photo ${ev.photo_id}" onerror="this.src='${API}/api/preview/${ev.photo_id}';" />
+                  <div class="entity-evidence-meta">
+                    <div style="font-weight: 700; color: #fff; display: flex; justify-content: space-between;">
+                      <span>Photo #${ev.photo_id}</span>
+                      <span style="color: #93c5fd; font-weight: 500;">${dateStr}</span>
+                    </div>
+                    <div style="color: var(--text-dim); font-size: 0.68rem;">📍 ${escapeHtml(placeStr)}</div>
+                    <div style="color: var(--text-muted); font-size: 0.7rem; line-height: 1.35; margin-top: 0.2rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                      ${escapeHtml(ev.description || 'Photo observation')}
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('');
+
+            evidenceGrid.querySelectorAll('.entity-evidence-card').forEach(card => {
+              card.addEventListener('click', async () => {
+                const photoId = Number(card.dataset.photoId);
+                let photo = allResults.find(p => p.id === photoId);
+                if (!photo) {
+                  try {
+                    const r = await fetch(`${API}/api/photos/${photoId}`);
+                    if (r.ok) photo = await r.json();
+                  } catch (e) {}
+                }
+                if (photo) {
+                  showDetail(photo);
+                } else {
+                  showToast(`Opening photo #${photoId}`);
+                }
+              });
+            });
+          } else {
+            evidenceGrid.innerHTML = `<div style="grid-column: 1 / -1; color: var(--text-muted); font-size: 0.76rem; padding: 0.5rem 0;">No specific photo evidence cited.</div>`;
+          }
+
+          resultWrap.style.display = 'flex';
+        } else {
+          showToast(data.error || 'No answer generated');
+        }
+      } catch (e) {
+        console.error('Error in ask query:', e);
+        showToast('Failed to consult Gemma 4 E4B');
+      } finally {
+        loading.style.display = 'none';
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    }
+
+    // Modal Event Listeners
+    $('#entityBioClose')?.addEventListener('click', () => $('#entityBioModal').classList.remove('active'));
+    $('#entityBioModal')?.addEventListener('click', (e) => {
+      if (e.target === $('#entityBioModal')) $('#entityBioModal').classList.remove('active');
+    });
+
+    $('#entityBioTabBtnBio')?.addEventListener('click', () => switchEntityBioTab('bio'));
+    $('#entityBioTabBtnAsk')?.addEventListener('click', () => switchEntityBioTab('ask'));
+
+    $('#entityBioGenerateEmptyBtn')?.addEventListener('click', () => generateEntityBio(true));
+    $('#entityBioRegenerateBtn')?.addEventListener('click', () => generateEntityBio(true));
+
+    $('#entityBioCopyBtn')?.addEventListener('click', () => {
+      if (currentBioText) {
+        navigator.clipboard.writeText(currentBioText);
+        showToast('Copied biography to clipboard');
+      } else {
+        showToast('No biography to copy');
+      }
+    });
+
+    $('#entityAskCopyAnswerBtn')?.addEventListener('click', () => {
+      const text = $('#entityAskAnswerText')?.textContent;
+      if (text) {
+        navigator.clipboard.writeText(text);
+        showToast('Copied answer to clipboard');
+      }
+    });
+
+    $('#entityBioViewPhotosBtn')?.addEventListener('click', () => {
+      if (currentBioPerson) {
+        $('#entityBioModal').classList.remove('active');
+        showPersonPhotos(currentBioPerson);
+      }
+    });
+
+    $('#entityAskSubmitBtn')?.addEventListener('click', () => submitEntityQuestion());
+    $('#entityAskInput')?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        submitEntityQuestion();
+      }
+    });
 
     document.querySelectorAll('.people-tab').forEach(tab => {
       tab.addEventListener('click', () => {
