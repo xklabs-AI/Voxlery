@@ -350,3 +350,276 @@ Instructions:
         "model_used": model,
         "total_entity_photos": len(photos),
     }
+
+
+def fetch_entity_timeline(person_id: int) -> dict:
+    """
+    Fetch comprehensive chronological timeline, facet options (years, locations),
+    and statistics for a tagged entity.
+    """
+    person, photos = fetch_entity_photos(person_id)
+
+    timeline_items = []
+    years_counter: dict[str, int] = {}
+    locations_counter: dict[str, int] = {}
+    companions_counter: dict[str, int] = {}
+
+    dated_items = []
+
+    for p in photos:
+        dt_raw = p.get("date_taken")
+        year = "Undated"
+        month_year = "Undated"
+        date_str = "Undated"
+        time_str = ""
+
+        if dt_raw:
+            try:
+                # Handle ISO formats like 2025-08-11T08:37:04 or 2025-08-11 08:37:04
+                clean_dt = dt_raw.replace("T", " ")
+                parts = clean_dt.split(" ")
+                date_part = parts[0]
+                y_m_d = date_part.split("-")
+                if len(y_m_d) == 3:
+                    y, m, d = int(y_m_d[0]), int(y_m_d[1]), int(y_m_d[2])
+                    year = str(y)
+                    # Month name
+                    month_names = [
+                        "", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                    ]
+                    m_name = month_names[m] if 1 <= m <= 12 else str(m)
+                    month_year = f"{m_name} {y}"
+                    date_str = f"{m_name} {d}, {y}"
+
+                if len(parts) > 1 and parts[1]:
+                    time_part = parts[1].split(".")[0]
+                    h_m = time_part.split(":")
+                    if len(h_m) >= 2:
+                        hr, mn = int(h_m[0]), int(h_m[1])
+                        ampm = "AM" if hr < 12 else "PM"
+                        hr12 = hr % 12 or 12
+                        time_str = f"{hr12}:{mn:02d} {ampm}"
+            except Exception:
+                pass
+
+        # Canonical location label
+        raw_place = p.get("place_name")
+        city = p.get("city")
+        region = p.get("region")
+        country = p.get("country")
+
+        if raw_place and raw_place.strip():
+            location_label = raw_place.strip()
+        elif city or region or country:
+            parts = [c for c in [city, region, country] if c and c.strip()]
+            location_label = ", ".join(parts)
+        else:
+            location_label = "Local Setting / Undisclosed"
+
+        # Companions
+        raw_comps = p.get("companions") or []
+        comps_list = []
+        for c in raw_comps:
+            c_name = c.get("name", "Unknown")
+            c_rel = c.get("relationship", "")
+            comps_list.append({"person_id": c.get("person_id"), "name": c_name, "relationship": c_rel})
+            companions_counter[c_name] = companions_counter.get(c_name, 0) + 1
+
+        item = {
+            "id": p["id"],
+            "date_taken": dt_raw,
+            "year": year,
+            "month_year": month_year,
+            "date_str": date_str,
+            "time_str": time_str,
+            "location": location_label,
+            "place_name": raw_place,
+            "city": city,
+            "region": region,
+            "country": country,
+            "description": p.get("raw_description") or p.get("enriched_text") or "",
+            "companions": comps_list,
+            "camera": f"{p.get('camera_make', '')} {p.get('camera_model', '')}".strip() or None,
+        }
+
+        timeline_items.append(item)
+        years_counter[year] = years_counter.get(year, 0) + 1
+        locations_counter[location_label] = locations_counter.get(location_label, 0) + 1
+
+        if dt_raw:
+            dated_items.append((dt_raw, month_year))
+
+    # Format years facet: numeric years sorted descending, "Undated" at end
+    numeric_years = sorted(
+        [y for y in years_counter.keys() if y != "Undated"],
+        key=lambda x: int(x) if x.isdigit() else 0,
+        reverse=True,
+    )
+    facet_years = [{"year": y, "count": years_counter[y]} for y in numeric_years]
+    if "Undated" in years_counter:
+        facet_years.append({"year": "Undated", "count": years_counter["Undated"]})
+
+    # Format locations facet: sorted by count descending
+    facet_locations = sorted(
+        [{"location": loc, "count": count} for loc, count in locations_counter.items()],
+        key=lambda x: x["count"],
+        reverse=True,
+    )
+
+    # Calculate date span
+    date_span = "Undated Archive"
+    earliest_date = None
+    latest_date = None
+    if dated_items:
+        dated_items.sort(key=lambda x: x[0])
+        earliest_raw, earliest_my = dated_items[0]
+        latest_raw, latest_my = dated_items[-1]
+        earliest_date = earliest_raw
+        latest_date = latest_raw
+        if earliest_my == latest_my:
+            date_span = earliest_my
+        else:
+            date_span = f"{earliest_my} – {latest_my}"
+
+    unique_named_locations = len([loc for loc in locations_counter if loc != "Local Setting / Undisclosed"])
+
+    top_comps = sorted(
+        [{"name": k, "count": v} for k, v in companions_counter.items()],
+        key=lambda x: x["count"],
+        reverse=True,
+    )
+
+    stats = {
+        "total_photos": len(photos),
+        "earliest_date": earliest_date,
+        "latest_date": latest_date,
+        "date_span": date_span,
+        "unique_locations_count": unique_named_locations,
+        "total_locations_count": len(locations_counter),
+        "top_companions": top_comps,
+    }
+
+    return {
+        "status": "ok",
+        "person": person,
+        "timeline": timeline_items,
+        "facet_years": facet_years,
+        "facet_locations": facet_locations,
+        "stats": stats,
+    }
+
+
+def search_entity_whereabouts(
+    person_id: int,
+    query: Optional[str] = None,
+    model: str = PRIMARY_ENTITY_MODEL,
+) -> dict:
+    """
+    Synthesize an AI whereabouts itinerary or answer location-specific questions
+    about a tagged entity using Gemma 4 E4B.
+    """
+    timeline_data = fetch_entity_timeline(person_id)
+    person = timeline_data["person"]
+    items = timeline_data["timeline"]
+    stats = timeline_data["stats"]
+
+    name = person["name"]
+    rel = person.get("relationship") or "Individual"
+    query_clean = (query or "").strip()
+
+    # Build geographical & chronological record lines
+    record_lines = []
+    matched_photo_ids = set()
+
+    for idx, it in enumerate(items, 1):
+        dt = it["date_str"] if it["date_str"] != "Undated" else "Undated photo"
+        if it["time_str"]:
+            dt += f" at {it['time_str']}"
+        loc = it["location"]
+        comps = ""
+        if it["companions"]:
+            comps = " with " + ", ".join([f"{c['name']} ({c['relationship']})" for c in it["companions"]])
+        desc = (it["description"] or "In scene").strip()
+        record_lines.append(f"Photo #{it['id']} [{dt} @ {loc}{comps}]:\n  Observation: {desc}\n")
+
+        # Basic keyword match to highlight photos
+        if query_clean:
+            q_lower = query_clean.lower()
+            if (
+                q_lower in loc.lower()
+                or (it["year"] != "Undated" and it["year"] in q_lower)
+                or (it["month_year"] != "Undated" and it["month_year"].lower() in q_lower)
+                or q_lower in desc.lower()
+            ):
+                matched_photo_ids.add(it["id"])
+
+    records_str = "\n".join(record_lines)
+
+    is_general_summary = (
+        not query_clean
+        or query_clean.lower() in [
+            "summary", "whereabouts", "whereabouts summary", "travelogue",
+            "travel history", "itinerary", "places visited", "all places",
+        ]
+    )
+
+    if is_general_summary:
+        user_prompt_intent = f"Compile a comprehensive chronological Whereabouts & Travel History for {name}."
+        instructions = f"""Instructions:
+1. Provide an inspiring, structured Whereabouts Dossier for {name} ({rel}).
+2. Use clear markdown sections:
+   - 🗺️ **Whereabouts & Travel Overview**: Summary of geographical range ({stats['date_span']}, {stats['unique_locations_count']} unique locations).
+   - 🗓️ **Chronological Journey & Timeline**: Walk through their journey year by year or milestone by milestone, specifically citing dates, places (e.g. national parks, cities, home), and photo numbers (e.g. Photo #19).
+   - 📍 **Favorite & Recurring Environments**: Key settings where {name} spent time (nature, state parks, road trips, cozy home spots).
+   - 👥 **Travel Companions**: Family, friends, or fellow pets who accompanied them.
+3. Be strictly factual to the provided photographic evidence."""
+    else:
+        user_prompt_intent = f"User Question regarding whereabouts/locations/dates: '{query_clean}'"
+        instructions = f"""Instructions:
+1. Answer the question directly and specifically based on the places, dates, and scenes where {name} ({rel}) appears.
+2. Explicitly cite the specific photo numbers (e.g. Photo #29), dates, and locations.
+3. If {name} was not photographed at a requested place or date, state so clearly and mention where/when they WERE photographed instead.
+4. Keep the response organized with clear markdown formatting."""
+
+    prompt = f"""You are an expert personal archivist specializing in whereabouts, journeys, and chronological history for {name} ({rel}).
+IMPORTANT CONTEXT: {name} is confirmed to be the tagged {rel.lower()} in all photos below.
+
+Archive Timeline Records:
+{records_str}
+
+{user_prompt_intent}
+
+{instructions}
+"""
+
+    answer_text = call_ollama(prompt, model=model)
+
+    # Also detect cited photo numbers in answer (e.g. Photo #19, #29)
+    import re
+    cited_ids = re.findall(r"(?:Photo|photo)\s*#?(\d+)", answer_text)
+    for cid in cited_ids:
+        try:
+            matched_photo_ids.add(int(cid))
+        except ValueError:
+            pass
+
+    # If no specific matches, default to all photos if general summary
+    if is_general_summary and not matched_photo_ids:
+        matched_photo_ids = {it["id"] for it in items}
+
+    # Gather evidence items
+    evidence = [it for it in items if it["id"] in matched_photo_ids]
+    if not evidence:
+        evidence = items[:6]
+
+    return {
+        "status": "ok",
+        "person": person,
+        "query": query_clean or "Whereabouts Summary",
+        "answer": answer_text,
+        "matched_photo_ids": sorted(list(matched_photo_ids)),
+        "evidence": evidence,
+        "stats": stats,
+        "model_used": model,
+    }

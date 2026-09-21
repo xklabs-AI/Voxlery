@@ -4108,6 +4108,281 @@
       gap: 0.25rem;
     }
 
+    /* ── Entity Timeline & Whereabouts ── */
+    .entity-timeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+    .timeline-hero-stats {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.85rem 1.15rem;
+    }
+    .timeline-stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: #e2e8f0;
+    }
+    .timeline-stat-icon {
+      font-size: 1.15rem;
+    }
+    .timeline-stat-label {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .timeline-stat-val {
+      font-weight: 700;
+      color: #fff;
+      font-size: 0.86rem;
+    }
+    .timeline-filter-toolbar {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.9rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .timeline-filter-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .timeline-filter-group {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+    .timeline-filter-label {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+    .timeline-select {
+      background: #0f172a;
+      border: 1px solid var(--border-highlight);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-size: 0.76rem;
+      padding: 0.35rem 0.65rem;
+      outline: none;
+      cursor: pointer;
+      max-width: 260px;
+    }
+    .timeline-select:focus {
+      border-color: var(--accent);
+    }
+    .timeline-chips-row {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .timeline-chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .timeline-chip:hover {
+      background: rgba(56, 189, 248, 0.18);
+      border-color: #38bdf8;
+      color: #fff;
+    }
+    .timeline-chip.active {
+      background: rgba(56, 189, 248, 0.25);
+      border-color: #38bdf8;
+      color: #38bdf8;
+      font-weight: 700;
+    }
+    .timeline-whereabouts-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .timeline-spine-feed {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-left: 0.75rem;
+      border-left: 2px solid rgba(56, 189, 248, 0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+    .timeline-year-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      position: relative;
+    }
+    .timeline-year-badge {
+      position: relative;
+      left: -2.35rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      border: 2px solid #0f172a;
+      box-shadow: 0 0 12px rgba(2, 132, 199, 0.45);
+      width: fit-content;
+      z-index: 2;
+    }
+    .timeline-event-card {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      gap: 1rem;
+      padding: 0.85rem;
+      transition: all 0.18s ease;
+      position: relative;
+    }
+    .timeline-event-card::before {
+      content: '';
+      position: absolute;
+      left: -1.95rem;
+      top: 1.25rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #38bdf8;
+      border: 2px solid #0f172a;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
+    }
+    .timeline-event-card:hover {
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
+    }
+    .timeline-event-thumb-wrap {
+      width: 130px;
+      height: 105px;
+      min-width: 130px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: #1e293b;
+      cursor: pointer;
+      position: relative;
+    }
+    .timeline-event-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.2s ease;
+    }
+    .timeline-event-card:hover .timeline-event-thumb {
+      transform: scale(1.05);
+    }
+    .timeline-event-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .timeline-event-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .timeline-date-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .timeline-time-sub {
+      font-size: 0.7rem;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+    .timeline-loc-pill {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #7dd3fc;
+      border-radius: 12px;
+      padding: 0.15rem 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      max-width: 280px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .timeline-loc-pill:hover {
+      background: rgba(56, 189, 248, 0.28);
+      border-color: #38bdf8;
+      color: #fff;
+    }
+    .timeline-comps-row {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+    .timeline-comp-pill {
+      background: rgba(139, 92, 246, 0.14);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      color: #c4b5fd;
+      border-radius: 12px;
+      padding: 0.1rem 0.45rem;
+      font-size: 0.68rem;
+      font-weight: 500;
+    }
+    .timeline-desc-snippet {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-top: 0.1rem;
+    }
+    .timeline-actions-row {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.4rem;
+      padding-top: 0.25rem;
+    }
+
     /* ═══════════════════════════════════════════════════════
        THEME SYSTEM (Dark, Ocean, White, Tropical, Christmas, Galaxy, Sunset)
        ═══════════════════════════════════════════════════════ */
@@ -6450,6 +6725,9 @@
               <button type="button" class="tool-btn" id="btnDetailBio" style="background: linear-gradient(135deg, #10b981, #059669); border: none; color: #fff; font-size: 0.78rem; padding: 0.4rem 0.85rem;">
                 <span>📖 AI Biography & Search</span>
               </button>
+              <button type="button" class="tool-btn" id="btnDetailTimeline" style="background: rgba(14, 165, 233, 0.2); border: 1px solid rgba(14, 165, 233, 0.45); color: #bae6fd; font-size: 0.78rem; padding: 0.4rem 0.85rem;">
+                <span>📅 Life Timeline</span>
+              </button>
               <button type="button" class="tool-btn" id="btnDetailStory" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; color: #fff; font-size: 0.78rem; padding: 0.4rem 0.85rem;">
                 <span>✨ Generate Story</span>
               </button>
@@ -6585,6 +6863,7 @@
       <!-- Navigation Tabs -->
       <div class="entity-bio-nav">
         <button type="button" class="entity-bio-tab-btn active" id="entityBioTabBtnBio">📖 AI Biography</button>
+        <button type="button" class="entity-bio-tab-btn" id="entityBioTabBtnTimeline">📅 Life Timeline & Whereabouts</button>
         <button type="button" class="entity-bio-tab-btn" id="entityBioTabBtnAsk">🔍 Ask & Search</button>
       </div>
 
@@ -6604,6 +6883,113 @@
             <div style="font-size: 0.8rem; margin-top: 0.3rem;">Click "Generate Biography" to synthesize information from their tagged photos using Gemma 4 E4B.</div>
             <button type="button" class="cta-btn" id="entityBioGenerateEmptyBtn" style="margin-top: 1rem;">✨ Generate Biography</button>
           </div>
+        </div>
+
+        <!-- Life Timeline & Whereabouts Pane -->
+        <div class="entity-bio-pane" id="entityBioPaneTimeline">
+          <!-- Hero Stats Bar -->
+          <div class="timeline-hero-stats">
+            <div class="timeline-stat-item">
+              <span class="timeline-stat-icon">📅</span>
+              <div>
+                <div class="timeline-stat-label">Timeline Span</div>
+                <div class="timeline-stat-val" id="timelineSpanVal">—</div>
+              </div>
+            </div>
+            <div class="timeline-stat-item">
+              <span class="timeline-stat-icon">📍</span>
+              <div>
+                <div class="timeline-stat-label">Locations Recorded</div>
+                <div class="timeline-stat-val" id="timelineLocationsVal">0</div>
+              </div>
+            </div>
+            <div class="timeline-stat-item">
+              <span class="timeline-stat-icon">📸</span>
+              <div>
+                <div class="timeline-stat-label">Tagged Milestones</div>
+                <div class="timeline-stat-val" id="timelinePhotosVal">0 photos</div>
+              </div>
+            </div>
+            <div class="timeline-stat-item" id="timelineTopCompanionsWrap">
+              <span class="timeline-stat-icon">👥</span>
+              <div>
+                <div class="timeline-stat-label">Frequent Companions</div>
+                <div class="timeline-stat-val" id="timelineCompanionsVal">None</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filter Toolbar -->
+          <div class="timeline-filter-toolbar">
+            <div class="timeline-filter-row">
+              <div class="timeline-filter-group">
+                <span class="timeline-filter-label">🗓️ Year:</span>
+                <select id="timelineYearSelect" class="timeline-select">
+                  <option value="all">All Years</option>
+                </select>
+              </div>
+              <div class="timeline-filter-group">
+                <span class="timeline-filter-label">📍 Location:</span>
+                <select id="timelineLocationSelect" class="timeline-select" style="max-width: 240px;">
+                  <option value="all">All Locations</option>
+                </select>
+              </div>
+              <button type="button" class="tool-btn" id="timelineResetFiltersBtn" style="font-size: 0.72rem; padding: 0.32rem 0.65rem;">✕ Reset Filters</button>
+              <div style="margin-left: auto; font-size: 0.75rem; color: var(--text-dim);">
+                Showing <strong id="timelineFilteredCount" style="color: #fff;">0</strong> milestones
+              </div>
+            </div>
+
+            <!-- Quick Year Filter Chips -->
+            <div class="timeline-chips-row" id="timelineYearChipsRow"></div>
+
+            <!-- Whereabouts AI Search Bar inside Timeline -->
+            <div class="timeline-whereabouts-box">
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <input type="text" id="timelineWhereaboutsInput" class="entity-ask-input" placeholder="Search whereabouts or ask Gemma 4 E4B (e.g. Where was she in August 2025?)..." />
+                <button type="button" class="cta-btn" id="timelineWhereaboutsSubmitBtn" style="padding: 0.62rem 0.95rem; white-space: nowrap; font-size: 0.78rem;">Ask Whereabouts</button>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem;">
+                <div class="quick-prompt-chips" id="timelineWhereaboutsChips">
+                  <div class="quick-prompt-chip" data-whereabouts="Whereabouts summary">🗺️ Whereabouts Summary</div>
+                  <div class="quick-prompt-chip" data-whereabouts="All places visited">📍 All Places Visited</div>
+                  <div class="quick-prompt-chip" data-whereabouts="Earliest vs latest memory">🗓️ Earliest vs Latest</div>
+                  <div class="quick-prompt-chip" data-whereabouts="Trips with companions">👥 Trips with Companions</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Whereabouts AI Response Card (Generated by Gemma 4) -->
+          <div id="timelineWhereaboutsCard" class="entity-ask-answer-card" style="display: none;">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.45rem;">
+              <div style="font-size: 0.8rem; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 0.4rem;">
+                <span>🤖 Gemma 4 E4B Whereabouts Dossier</span>
+              </div>
+              <div style="display: flex; gap: 0.4rem; align-items: center;">
+                <button type="button" class="tool-btn" id="timelineCopyWhereaboutsBtn" style="font-size: 0.72rem; padding: 0.25rem 0.55rem;">📋 Copy</button>
+                <button type="button" class="tool-btn" id="timelineCloseWhereaboutsBtn" style="font-size: 0.72rem; padding: 0.25rem 0.45rem;">✕ Close</button>
+              </div>
+            </div>
+            <div id="timelineWhereaboutsAnswerText" class="entity-ask-answer-text"></div>
+          </div>
+
+          <!-- Timeline Loading Spinner -->
+          <div id="timelineLoading" style="display: none; text-align: center; padding: 3rem 1rem;">
+            <div class="spinner" style="width: 28px; height: 28px; border-width: 3px; margin: 0 auto 0.85rem auto;"></div>
+            <div style="font-weight: 600; color: #e2e8f0; font-size: 0.95rem;">Loading Life Timeline & History...</div>
+            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 0.35rem;">Organizing photos, dates, and locations into chronological chapters.</div>
+          </div>
+
+          <!-- Empty State -->
+          <div id="timelineEmpty" style="display: none; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+            <div style="font-size: 2.5rem; margin-bottom: 0.6rem;">📅</div>
+            <div style="font-weight: 600; font-size: 1rem; color: #fff;">No timeline milestones found</div>
+            <div style="font-size: 0.8rem; margin-top: 0.3rem;">No photos match the selected year or location filter.</div>
+          </div>
+
+          <!-- Chronological Spine & Milestones Feed -->
+          <div id="timelineFeed" class="timeline-spine-feed"></div>
         </div>
 
         <!-- Ask AI Pane -->
@@ -12172,6 +12558,7 @@
         return `
           <div class="person-card" data-person-id="${p.id}" title="Click to view variations and profile">
             <div class="person-card-actions">
+              <button type="button" class="person-card-btn btn-timeline-person" data-person-id="${p.id}" title="Life Timeline & History for ${escapeHtml(p.name)}">📅</button>
               <button type="button" class="person-card-btn btn-bio-person" data-person-id="${p.id}" title="AI Biography & Search for ${escapeHtml(p.name)}">📖</button>
               <button type="button" class="person-card-btn btn-edit-person" data-person-id="${p.id}" title="Rename / Edit ${escapeHtml(p.name)}">✏️</button>
               <button type="button" class="person-card-btn delete-btn btn-delete-person" data-person-id="${p.id}" title="Delete ${escapeHtml(p.name)}">🗑️</button>
@@ -12196,12 +12583,21 @@
         });
       });
 
+      grid.querySelectorAll('.btn-timeline-person').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const pid = Number(btn.dataset.personId);
+          const person = allPeople.find(p => p.id === pid);
+          if (person) openEntityBioModal(person, 'timeline');
+        });
+      });
+
       grid.querySelectorAll('.btn-bio-person').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
           const pid = Number(btn.dataset.personId);
           const person = allPeople.find(p => p.id === pid);
-          if (person) openEntityBioModal(person);
+          if (person) openEntityBioModal(person, 'bio');
         });
       });
 
@@ -12244,6 +12640,7 @@
               <span>${icon} Photos featuring <strong>${escapeHtml(person.name)}</strong> (${escapeHtml(person.relationship || 'Friend')}) — ${photos.length} photos</span>
             </div>
             <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <button class="small-add-btn" id="personTimelineHeaderBtn" style="background: rgba(14, 165, 233, 0.2); border: 1px solid rgba(14, 165, 233, 0.45); color: #bae6fd; font-size: 0.76rem; padding: 0.3rem 0.75rem;">📅 Life Timeline</button>
               <button class="small-add-btn" id="personBioHeaderBtn" style="background: linear-gradient(135deg, #10b981, #059669); border: none; color: #fff; font-size: 0.76rem; padding: 0.3rem 0.75rem;">📖 AI Biography & Search</button>
               <button class="small-add-btn" id="personVariationsHeaderBtn" style="background: rgba(99,102,241,0.2); border: 1px solid rgba(99,102,241,0.4); color: #e0e7ff; font-size: 0.76rem; padding: 0.3rem 0.65rem;">🔍 Variations & Face Detections</button>
               <button class="small-add-btn" id="personStoryBtn" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; color: #fff; font-size: 0.76rem; padding: 0.3rem 0.75rem;">✨ Generate Story</button>
@@ -12259,8 +12656,12 @@
         $('#personBackToPeopleBtn')?.addEventListener('click', () => openPeopleExplorer());
         $('#personBackToGalleryBtn')?.addEventListener('click', () => showAllPhotos());
 
+        $('#personTimelineHeaderBtn')?.addEventListener('click', () => {
+          openEntityBioModal(person, 'timeline');
+        });
+
         $('#personBioHeaderBtn')?.addEventListener('click', () => {
-          openEntityBioModal(person);
+          openEntityBioModal(person, 'bio');
         });
 
         $('#personVariationsHeaderBtn')?.addEventListener('click', () => {
@@ -12607,7 +13008,12 @@
 
       $('#btnDetailBio').onclick = () => {
         modal.classList.remove('active');
-        openEntityBioModal(person);
+        openEntityBioModal(person, 'bio');
+      };
+
+      $('#btnDetailTimeline').onclick = () => {
+        modal.classList.remove('active');
+        openEntityBioModal(person, 'timeline');
       };
 
       $('#btnDetailStory').onclick = async () => {
@@ -12863,6 +13269,258 @@
       return html;
     }
 
+    // ═══════════════════════════════════════════════════════
+    // ENTITY TIMELINE & WHEREABOUTS ENGINE
+    // ═══════════════════════════════════════════════════════
+    let currentTimelineData = null;
+    let currentTimelineFilterYear = 'all';
+    let currentTimelineFilterLocation = 'all';
+    let currentWhereaboutsText = '';
+
+    async function loadEntityTimeline(person, force = false) {
+      if (!person) return;
+      const loading = $('#timelineLoading');
+      const feed = $('#timelineFeed');
+      const empty = $('#timelineEmpty');
+
+      loading.style.display = 'block';
+      feed.style.display = 'none';
+      empty.style.display = 'none';
+
+      try {
+        const res = await fetch(`${API}/api/people/${person.id}/timeline`);
+        const data = await res.json();
+        currentTimelineData = data;
+
+        // Render Hero Stats
+        const stats = data.stats || {};
+        $('#timelineSpanVal').textContent = stats.date_span || 'Undated archive';
+        $('#timelineLocationsVal').textContent = `${stats.unique_locations_count || 0} unique places`;
+        $('#timelinePhotosVal').textContent = `${stats.total_photos || 0} photos`;
+
+        const topComps = stats.top_companions || [];
+        if (topComps.length > 0) {
+          $('#timelineTopCompanionsWrap').style.display = 'flex';
+          $('#timelineCompanionsVal').textContent = topComps.slice(0, 2).map(c => `${c.name} (${c.count})`).join(', ');
+        } else {
+          $('#timelineCompanionsVal').textContent = 'Solo / Untagged others';
+        }
+
+        // Populate Year Dropdown & Chips
+        const yearSelect = $('#timelineYearSelect');
+        const yearChips = $('#timelineYearChipsRow');
+        const facetYears = data.facet_years || [];
+
+        yearSelect.innerHTML = `<option value="all">All Years (${stats.total_photos || 0})</option>` +
+          facetYears.map(y => `<option value="${escapeHtml(y.year)}">${escapeHtml(y.year)} (${y.count})</option>`).join('');
+
+        yearChips.innerHTML = `<div class="timeline-chip active" data-year="all">All (${stats.total_photos || 0})</div>` +
+          facetYears.map(y => `<div class="timeline-chip" data-year="${escapeHtml(y.year)}">${escapeHtml(y.year)} (${y.count})</div>`).join('');
+
+        yearChips.querySelectorAll('.timeline-chip').forEach(chip => {
+          chip.addEventListener('click', () => {
+            const yr = chip.dataset.year;
+            currentTimelineFilterYear = yr;
+            yearSelect.value = yr;
+            updateYearChipsActive();
+            applyTimelineFilters();
+          });
+        });
+
+        // Populate Location Dropdown
+        const locSelect = $('#timelineLocationSelect');
+        const facetLocs = data.facet_locations || [];
+        locSelect.innerHTML = `<option value="all">All Locations (${stats.total_photos || 0})</option>` +
+          facetLocs.map(l => `<option value="${escapeHtml(l.location)}">${escapeHtml(l.location)} (${l.count})</option>`).join('');
+
+        // Reset Filter variables
+        currentTimelineFilterYear = 'all';
+        currentTimelineFilterLocation = 'all';
+        yearSelect.value = 'all';
+        locSelect.value = 'all';
+        updateYearChipsActive();
+
+        applyTimelineFilters();
+      } catch (e) {
+        console.error('Failed to load entity timeline:', e);
+        showToast('Error loading timeline');
+      } finally {
+        loading.style.display = 'none';
+      }
+    }
+
+    function updateYearChipsActive() {
+      $('#timelineYearChipsRow')?.querySelectorAll('.timeline-chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.year === currentTimelineFilterYear);
+      });
+    }
+
+    function applyTimelineFilters() {
+      if (!currentTimelineData || !currentTimelineData.timeline) return;
+
+      const feed = $('#timelineFeed');
+      const empty = $('#timelineEmpty');
+      const countEl = $('#timelineFilteredCount');
+
+      let filtered = currentTimelineData.timeline;
+
+      // Filter by Year
+      if (currentTimelineFilterYear !== 'all') {
+        filtered = filtered.filter(it => it.year === currentTimelineFilterYear);
+      }
+
+      // Filter by Location
+      if (currentTimelineFilterLocation !== 'all') {
+        filtered = filtered.filter(it => it.location === currentTimelineFilterLocation);
+      }
+
+      countEl.textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        feed.style.display = 'none';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      feed.style.display = 'flex';
+
+      // Group filtered items by Year (descending)
+      const groups = {};
+      filtered.forEach(it => {
+        const yr = it.year || 'Undated';
+        if (!groups[yr]) groups[yr] = [];
+        groups[yr].push(it);
+      });
+
+      // Sort year keys descending, Undated at end
+      const sortedYears = Object.keys(groups).sort((a, b) => {
+        if (a === 'Undated') return 1;
+        if (b === 'Undated') return -1;
+        return Number(b) - Number(a);
+      });
+
+      feed.innerHTML = sortedYears.map(yr => {
+        const items = groups[yr];
+        const yearTitle = yr === 'Undated' ? 'Undated Memories' : yr;
+
+        const cardsHtml = items.map(it => {
+          const dtText = it.date_str !== 'Undated' ? it.date_str : 'Date Unspecified';
+          const timeText = it.time_str ? `<span class="timeline-time-sub">• ${escapeHtml(it.time_str)}</span>` : '';
+          const locText = escapeHtml(it.location);
+          const descText = escapeHtml(it.description || 'Photo in archive');
+
+          const compsHtml = (it.companions && it.companions.length > 0)
+            ? `<div class="timeline-comps-row">${it.companions.map(c => `<span class="timeline-comp-pill">👥 ${escapeHtml(c.name)}</span>`).join('')}</div>`
+            : '';
+
+          return `
+            <div class="timeline-event-card" data-photo-id="${it.id}">
+              <div class="timeline-event-thumb-wrap" onclick="inspectTimelinePhoto(${it.id})" title="Click to open full photo">
+                <img class="timeline-event-thumb" src="${API}/api/thumb/${it.id}" alt="Photo #${it.id}" onerror="this.src='${API}/api/preview/${it.id}';" />
+              </div>
+              <div class="timeline-event-info">
+                <div class="timeline-event-header">
+                  <div class="timeline-date-tag">
+                    <span>🗓️ ${escapeHtml(dtText)}</span>
+                    ${timeText}
+                  </div>
+                  <div class="timeline-loc-pill" onclick="quickFilterTimelineLocation('${escapeHtml(it.location).replace(/'/g, "\\'")}')" title="Click to filter timeline by this location">
+                    <span>📍 ${locText}</span>
+                  </div>
+                </div>
+                ${compsHtml}
+                <div class="timeline-desc-snippet" title="${descText}">${descText}</div>
+                <div class="timeline-actions-row">
+                  <button type="button" class="tool-btn" onclick="inspectTimelinePhoto(${it.id})" style="font-size: 0.7rem; padding: 0.2rem 0.5rem;">🔍 Inspect Photo</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        return `
+          <div class="timeline-year-section">
+            <div class="timeline-year-badge">
+              <span>📅 ${escapeHtml(yearTitle)}</span>
+              <span style="font-size: 0.7rem; font-weight: 500; opacity: 0.85;">(${items.length})</span>
+            </div>
+            ${cardsHtml}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function quickFilterTimelineLocation(locName) {
+      if (!locName) return;
+      currentTimelineFilterLocation = locName;
+      const select = $('#timelineLocationSelect');
+      if (select) select.value = locName;
+      applyTimelineFilters();
+      showToast(`Filtered timeline to: ${locName.split(',')[0]}`);
+    }
+
+    async function inspectTimelinePhoto(photoId) {
+      let photo = allResults.find(p => p.id === photoId);
+      if (!photo) {
+        try {
+          const r = await fetch(`${API}/api/photos/${photoId}`);
+          if (r.ok) photo = await r.json();
+        } catch (e) {}
+      }
+      if (photo) {
+        showDetail(photo);
+      } else {
+        showToast(`Viewing photo #${photoId}`);
+      }
+    }
+
+    async function submitEntityWhereabouts(customQuery = null) {
+      if (!currentBioPerson) return;
+      const person = currentBioPerson;
+
+      const input = $('#timelineWhereaboutsInput');
+      const query = (customQuery !== null ? customQuery : (input ? input.value : '')).trim();
+
+      const card = $('#timelineWhereaboutsCard');
+      const answerEl = $('#timelineWhereaboutsAnswerText');
+      const submitBtn = $('#timelineWhereaboutsSubmitBtn');
+
+      if (submitBtn) submitBtn.disabled = true;
+      card.style.display = 'flex';
+      answerEl.innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: center; gap: 0.65rem; padding: 1.5rem 0; color: #38bdf8;">
+          <div class="spinner" style="width: 22px; height: 22px; border-width: 2px;"></div>
+          <span>Consulting Gemma 4 E4B across life records & chronological whereabouts...</span>
+        </div>
+      `;
+
+      try {
+        const res = await fetch(`${API}/api/people/${person.id}/whereabouts`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: query || 'Whereabouts summary', model: 'gemma4:e4b' })
+        });
+        const data = await res.json();
+
+        if (data && data.answer) {
+          currentWhereaboutsText = data.answer;
+          answerEl.innerHTML = formatMarkdownText(data.answer);
+
+          if (data.matched_photo_ids && data.matched_photo_ids.length > 0 && query && query !== 'Whereabouts summary') {
+            showToast(`Found ${data.matched_photo_ids.length} photo milestone(s) cited by Gemma 4`);
+          }
+        } else {
+          answerEl.innerHTML = `<div style="color: #f87171;">Failed to generate whereabouts dossier.</div>`;
+        }
+      } catch (e) {
+        console.error('Error generating whereabouts:', e);
+        answerEl.innerHTML = `<div style="color: #f87171;">Error connecting to Gemma 4 E4B.</div>`;
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    }
+
     async function openEntityBioModal(person, initialTab = 'bio') {
       if (!person) return;
       currentBioPerson = person;
@@ -12872,7 +13530,7 @@
       if (!modal) return;
 
       const icon = getRelationshipIcon(person.relationship);
-      $('#entityBioModalTitle').textContent = `📖 ${person.name} — AI Biography & Search`;
+      $('#entityBioModalTitle').textContent = `📖 ${person.name} — Biography, Timeline & Search`;
       $('#entityBioName').textContent = person.name;
       $('#entityBioRelBadge').textContent = `${icon} ${person.relationship || 'Friend'}`;
       $('#entityBioPhotoCountBadge').textContent = `${person.photo_count || 0} ${person.photo_count === 1 ? 'photo' : 'photos'}`;
@@ -12897,23 +13555,39 @@
       $('#entityAskLoading').style.display = 'none';
       $('#entityAskResultWrap').style.display = 'none';
 
+      // Reset Whereabouts UI
+      $('#timelineWhereaboutsCard').style.display = 'none';
+      if ($('#timelineWhereaboutsInput')) $('#timelineWhereaboutsInput').value = '';
+
       // Switch tab
       switchEntityBioTab(initialTab);
 
       modal.classList.add('active');
 
-      // Load biography
-      await loadEntityBio(person, false);
+      if (initialTab === 'bio') {
+        await loadEntityBio(person, false);
+      }
     }
 
     function switchEntityBioTab(tab) {
       const isBio = tab === 'bio';
+      const isTimeline = tab === 'timeline';
+      const isAsk = tab === 'ask';
+
       $('#entityBioTabBtnBio')?.classList.toggle('active', isBio);
-      $('#entityBioTabBtnAsk')?.classList.toggle('active', !isBio);
+      $('#entityBioTabBtnTimeline')?.classList.toggle('active', isTimeline);
+      $('#entityBioTabBtnAsk')?.classList.toggle('active', isAsk);
+
       $('#entityBioPaneBio')?.classList.toggle('active', isBio);
-      $('#entityBioPaneAsk')?.classList.toggle('active', !isBio);
-      if (!isBio) {
+      $('#entityBioPaneTimeline')?.classList.toggle('active', isTimeline);
+      $('#entityBioPaneAsk')?.classList.toggle('active', isAsk);
+
+      if (isTimeline && currentBioPerson) {
+        loadEntityTimeline(currentBioPerson);
+      } else if (isAsk) {
         setTimeout(() => $('#entityAskInput')?.focus(), 100);
+      } else if (isBio && currentBioPerson && !currentBioText) {
+        loadEntityBio(currentBioPerson, false);
       }
     }
 
@@ -13144,7 +13818,56 @@
     });
 
     $('#entityBioTabBtnBio')?.addEventListener('click', () => switchEntityBioTab('bio'));
+    $('#entityBioTabBtnTimeline')?.addEventListener('click', () => switchEntityBioTab('timeline'));
     $('#entityBioTabBtnAsk')?.addEventListener('click', () => switchEntityBioTab('ask'));
+
+    $('#timelineYearSelect')?.addEventListener('change', (e) => {
+      currentTimelineFilterYear = e.target.value;
+      updateYearChipsActive();
+      applyTimelineFilters();
+    });
+
+    $('#timelineLocationSelect')?.addEventListener('change', (e) => {
+      currentTimelineFilterLocation = e.target.value;
+      applyTimelineFilters();
+    });
+
+    $('#timelineResetFiltersBtn')?.addEventListener('click', () => {
+      currentTimelineFilterYear = 'all';
+      currentTimelineFilterLocation = 'all';
+      if ($('#timelineYearSelect')) $('#timelineYearSelect').value = 'all';
+      if ($('#timelineLocationSelect')) $('#timelineLocationSelect').value = 'all';
+      updateYearChipsActive();
+      applyTimelineFilters();
+      showToast('Filters reset');
+    });
+
+    $('#timelineWhereaboutsSubmitBtn')?.addEventListener('click', () => submitEntityWhereabouts());
+    $('#timelineWhereaboutsInput')?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        submitEntityWhereabouts();
+      }
+    });
+
+    $('#timelineWhereaboutsChips')?.querySelectorAll('.quick-prompt-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const q = chip.dataset.whereabouts;
+        if ($('#timelineWhereaboutsInput')) $('#timelineWhereaboutsInput').value = q;
+        submitEntityWhereabouts(q);
+      });
+    });
+
+    $('#timelineCloseWhereaboutsBtn')?.addEventListener('click', () => {
+      $('#timelineWhereaboutsCard').style.display = 'none';
+    });
+
+    $('#timelineCopyWhereaboutsBtn')?.addEventListener('click', () => {
+      if (currentWhereaboutsText) {
+        navigator.clipboard.writeText(currentWhereaboutsText);
+        showToast('Copied whereabouts dossier to clipboard');
+      }
+    });
 
     $('#entityBioGenerateEmptyBtn')?.addEventListener('click', () => generateEntityBio(true));
     $('#entityBioRegenerateBtn')?.addEventListener('click', () => generateEntityBio(true));

@@ -150,6 +150,11 @@ class EntityAskRequest(BaseModel):
     model: Optional[str] = "gemma4:e4b"
 
 
+class EntityWhereaboutsRequest(BaseModel):
+    query: Optional[str] = None
+    model: Optional[str] = "gemma4:e4b"
+
+
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Voxlery", version="1.0.0")
@@ -2672,6 +2677,31 @@ def ask_person_endpoint(person_id: int, req: EntityAskRequest):
         raise HTTPException(400, str(e))
     except Exception as e:
         raise HTTPException(500, f"Entity search failed: {e}")
+
+
+@app.get("/api/people/{person_id}/timeline")
+def get_person_timeline_endpoint(person_id: int):
+    """Return chronological life timeline and filter facets (years, locations) for a tagged entity."""
+    from backend.biography import fetch_entity_timeline
+    try:
+        return fetch_entity_timeline(person_id)
+    except ValueError as e:
+        raise HTTPException(404, str(e))
+    except Exception as e:
+        raise HTTPException(500, f"Timeline fetch failed: {e}")
+
+
+@app.post("/api/people/{person_id}/whereabouts")
+def get_person_whereabouts_endpoint(person_id: int, req: EntityWhereaboutsRequest):
+    """Generate whereabouts travelogue itinerary or answer whereabouts questions using Gemma 4 E4B."""
+    from backend.biography import search_entity_whereabouts
+    try:
+        return search_entity_whereabouts(person_id, query=req.query, model=req.model or "gemma4:e4b")
+    except ValueError as e:
+        raise HTTPException(404, str(e))
+    except Exception as e:
+        raise HTTPException(500, f"Whereabouts generation failed: {e}")
+
 
 
 
